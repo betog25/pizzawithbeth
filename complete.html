@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pizza with Beth - Entire List </title>
+    <meta name="viewport" content="width=width-device, initial-scale=1.0, user-scalable=yes">
+    <meta http-equiv="content-type" content="text/html;  charset="utf-8">
+    <link href="css/uxcore.css" rel="stylesheet">
+    <link href="css/customer-comp.css" rel="stylesheet">
+    <style>
+        pdiv {
+            opacity: 0.1;
+            height: 5px;
+        }            
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+        #map {
+            width: 100%;
+        }
+        #container {
+            height: 15px;
+            width: 5000px;
+            position: relative;
+        }
+        #image {
+            position: absolute;
+            left: 2px;
+           top: 2px;
+        }
+        #text {
+            z-index: 40;
+            position: absolute;
+            color: black;
+            font-size: 12px;
+            font-weight: bold;
+            left: 13px;
+            top: 10px;
+        }
+
+        #text2 {
+            z-index: 40;
+            position: absolute;
+            color: black;
+            font-size: 12px;
+            font-weight: bold;
+            left: 18px;
+            top: 16px;
+        }
+
+        #legend {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            padding: 5px;
+            margin: 5px;
+            border: 2px solid #000;
+        }
+
+
+        #legend h3 {
+            margin-top: 0;
+        }
+
+  
+        #legend img {
+            vertical-align: middle;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+ 
+
+<div id="map"></div>
+ <div valign="center" style="background-color: orange;" id="top_bar"><div ><a href="index.html"><img id="home_pic" valign="center" align="left" src="http://www.pizzawithbeth.com/images/home.png" width="3%" height="3%"></a></div><div id="page_title" valign="center" align="center" style="font-size: 40px;">Entire Pizza List</div></div>
+<div id="legend"></div>
+
+  <script javascript="">
+       
+        var iphone = 0;
+
+        function DetectIphone() {
+
+            if (navigator.userAgent.match(/Android/i) ||
+                navigator.userAgent.match(/webOS/i) ||
+                navigator.userAgent.match(/iPhone/i) ||
+                navigator.userAgent.match(/iPad/i) ||
+                navigator.userAgent.match(/iPod/i) ||
+                navigator.userAgent.match(/BlackBerry/i) ||
+                navigator.userAgent.match(/Windows Phone/i)) {
+                iphone = 1;
+            } else {
+                iphone = 0;
+            }
+        }
+
+        var map;
+        var infoWindow;
+        var side_bar_html = "";
+        var gmarkers = [];
+        var legend_txt =""
+
+function hidemarkers(index) {
+
+ if (infoWindow) 
+             infoWindow.close();
+                    
+    var option = ""
+    if (index == "0")
+        option = "missing";
+    if (index == "1")
+        option = "visited";
+
+    if (index == "2") {       
+        for (var i = 0; i < gmarkers.length; i++){
+            gmarkers[i].setVisible(true);           
+            }
+    } else {
+        for (var i = 0; i < gmarkers.length; i++) {
+            if (gmarkers[i].labelClass == option){
+                gmarkers[i].setVisible(true);                      
+            } 
+            else{
+                gmarkers[i].setVisible(false);
+                var i2=i+1;       
+                }
+        }
+    }
+}
+
+        function myclick(myLen) {
+
+            google.maps.event.trigger(gmarkers[myLen], "click");
+
+            map.setZoom(16);
+
+        }
+
+        function hideDivs(y) {
+             
+
+           if (iphone == 1) {
+                var offset = document.getElementById("hidden_div" + y).offsetTop;
+
+               var w = window,
+               d = document,
+               e = d.documentElement,
+               g = d.getElementsByTagName('body')[0],    
+               y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+
+             // document.getElementById('map').style.height = '33%';
+              offset -= (y*0.43);     
+               
+                 }
+            
+            if (iphone == 0) {
+                var offset = document.getElementById("hidden_div" + y).offsetTop;
+
+              
+            }
+
+        }
+
+        function initMap() {
+
+            DetectIphone();
+
+            if (iphone == 0) {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 3,
+                    center: new google.maps.LatLng(42,-57),
+                     mapTypeId: 'roadmap',
+                    streetViewControl: false,
+                    mapTypeControl: false
+                });
+            }
+
+            if (iphone == 1) {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 2,
+                    center: new google.maps.LatLng(45,-46),
+                     mapTypeId: 'roadmap',
+                    streetViewControl: false,
+                    mapTypeControl: false
+                });
+            }
+
+
+
+
+            function addInfoWindow(num, marker, message, name, date_visited, rating, icon_color, blurb, photo) {
+
+                var contentString = '<font size="4">' + name + '</font>' + '<br><br>' + message
+
+               contentString += '<font size="2">';
+
+                if (icon_color == 'visited')
+		{
+                    contentString = contentString + '<br><b>Date Visited: </b>' + date_visited + '<table><tr valign="center"><td>Rating: <td valign="center">'
+   	
+		    if (rating != 'unknown') 
+		    {
+                        var whole_number = Math.floor(rating);
+
+                        for (i = 0; i < whole_number; i++) {
+                            contentString += '<img src="https://pizzawithbeth.yolasite.com/resources/full-star.png" width="15" height="15" align="top"> '
+                        }
+
+                        if (whole_number != rating)
+                            contentString += '<img src="https://pizzawithbeth.yolasite.com/resources/half-star.png" width="15" height="15"  align="top"> '
+                    }
+                  }
+else
+contentString = contentString + '<br><b>Not Visited </b>'
+   	
+		   contentString += '</td> </tr></table>'
+
+               infoWindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+
+
+                google.maps.event.addListener(marker, 'click', function() {
+
+                    var lat = marker.getPosition().lat();
+                    var lon = marker.getPosition().lng();
+
+                    //if (iphone == 0)
+                    //lon = lon - 0.15;
+			
+
+
+                    map.setCenter(new google.maps.LatLng(lat, lon));
+
+                    if (infoWindow) {
+                        infoWindow.close();
+                    }
+
+
+                    infoWindow = new google.maps.InfoWindow({
+                        content: contentString
+                    });
+
+                    infoWindow.open(map, marker);
+
+                    hideDivs(num);
+
+                });
+
+            }
+
+
+
+            function createMarker(num, name, lat, lon, message, icon_color, date_visited, rating, blurb, photo) {
+
+                var oldnum = 1 * num;
+                oldnum += 1;
+
+                var markerLabel = '' + oldnum + '';
+
+                     
+                         
+          
+
+               var markerColor = "#000000";
+
+ var newmarker = new google.maps.Marker({
+          position: new google.maps.LatLng(lat, lon),
+               labelClass: icon_color,
+               label: {
+                        text: markerLabel,
+                        color: markerColor,
+                        fontSize: "12px",
+                        fontWeight: "bold"
+                    },     
+              map: map
+        });
+
+
+
+                gmarkers.push(newmarker);
+                myLen = gmarkers.length;
+                myLen = myLen - 1;
+                if (oldnum < 10)
+                    markerLabel = '&nbsp;' + oldnum + '';
+
+		contentString = '<font size="2">';
+
+                if (icon_color == 'visited')
+		{
+                    contentString = contentString + '<br><b>Date Visited: </b>' + date_visited + '<table><tr valign="center"><td>Rating: <td valign="center">'
+   	
+		    if (rating != 'unknown') 
+		    {
+                        var whole_number = Math.floor(rating);
+
+                        for (i = 0; i < whole_number; i++) 
+                        {
+                            contentString += '<img src="https://pizzawithbeth.yolasite.com/resources/full-star.png" align="top"> '
+                        }
+
+                        if (whole_number != rating)
+                            contentString += '<img src="https://pizzawithbeth.yolasite.com/resources/half-star.png" align="top"> '
+                    }
+		   contentString += '</td> </tr></table>'
+                }
+
+                
+ 		
+
+                addInfoWindow(num, gmarkers[(gmarkers.length - 1)], message, name, date_visited, rating, icon_color, blurb, photo);
+
+
+            }
+
+
+            // Create markers.        
+
+            createMarker('0', '2 Amys', 38.9337, -77.07307, '3715 Macomb St NW<br>Washington, DC 20016<br><a href="http://www.2amysdc.com">2amysdc.com</a>', 'visited', 'July 27, 2010', '5', 'Definitely one of the best pizza places in DC.  I went to 2 Amys with my friend Becca.  This was one of the first places we visited on the DC Pizza List.  The crust is definitely the highlight.');
+            createMarker('1', '&pizza', 38.91686, -77.02925, '1250 U St NW<br>Washington, DC 20009<br><a href="http://www.andpizza.com">andpizza.com</a>', 'visited', ' August 10, 2013 ', '4', "Pretty good pizza! Didn't have to wait long and lots of topping options.  I normally don't like pizza that isn't circular, but this shape worked for me", 'https://pizzawithbeth.yolasite.com/resources/andpizza.jpg');
+            createMarker('2', "Alberto's Pizza", 38.90943, -77.04539, '2010 P St NW<br>Washington, DC 20036<br><a href="http://www.albertospizzapst.com">albertospizzapst.com</a>', 'visited', 'October 20, 2010', '5', "Quintessential late-night slice.  I don't think I've ever been here earlier than 1am", 'https://pizzawithbeth.yolasite.com/resources/albertos.jpg');
+            createMarker('3', 'All-Purpose', 38.90698, -77.02422, '1250 9th St NW<br>Washington, DC 20001<br><a href="http://www.allpurposedc.com">allpurposedc.com</a>', 'visited', 'August 30, 2016 ', '4',"This didn't even exist when I was living in DC.  I came on a visit to DC, years later.  Good pizza, great crust");
+            createMarker('4', 'Comet Ping Pong', 38.95594, -77.06996, '5037 Connecticut Ave NW<br>Washington DC 20008<br><a href="http://www.cometpingpong.com">cometpingpong.com</a>', 'visited', 'October 10, 2014', '4.5', 'I visited two weeks before I moved from DC, in a last-minute attempt to finish the DC Pizza List.  I went to Comet Ping Pong with a group of friends.  Any restaurant that has ping-pong and pizza, is a great restaurant. ');
+            createMarker('5', 'DC Slices', 38.90192, -77.04452, '1990 K St NW<br>Washington, DC 20006<br><a href="http://www.pizzaslicesdc.com">www.pizzaslicesdc.com</a>', 'visited', ' April 17, 2010 ', '4',"Food truck.  I took a Friday off to find this truck.  Typical food truck pizza.  A little greasy, but hot (temperature)");
+            createMarker('6', "Ella's Wood Fired Pizza", 38.89782, -77.02426, '610 9th Street NW<br>Washington, DC 20004<br><a href="http://www.ellaspizza.com">www.ellaspizza.com</a>', 'visited', 'June 5, 2010 ', '4', "One of my favorites in DC.  I've been over 12 times.  Good crust and good, simple toppings.", 'https://pizzawithbeth.yolasite.com/resources/ellas.jpg');
+            createMarker('7', 'Etto', 38.91096, -77.03161, '1541 14th St NW<br>Washington, DC 20005<br><a href="http://www.ettodc.com">ettodc.com</a>', 'visited', ' July 20, 2013 ', '4', '', 'https://pizzawithbeth.yolasite.com/resources/etto.jpg');
+            createMarker('8', 'Fuel Pizza & Wings', 38.89707, -77.02013, '600 F St NW, Washington, DC 20004<br><a href="http://www.fuelpizza.com">fuelpizza.com</a>', 'visited', ' June 29, 2012 ', '4', ' ', 'https://pizzawithbeth.yolasite.com/resources/fuelpizza6.jpg');
+            createMarker('9', 'Fire Works Pizza', 38.88987, -77.08729, '2350 Clarendon Blvd, Arlington, VA 22201<br><a href="http://www.fireworkspizza.com">fireworkspizza.com</a>', 'visited', ' September 8, 2012 ', '2');
+            createMarker('10', 'Fuel Pizza & Wings', 38.90226, -77.03711, '1606 K St NW, Washington, DC 20006<br><a href="http://www.fuelpizza.com">fuelpizza.com</a>', 'visited', ' January 21, 2012 ', '5', '  ', 'https://pizzawithbeth.yolasite.com/resources/fuelpizzaf.jpg');
+            createMarker('11', 'Ghibellina', 38.91156, -77.03215, '1610 14th St NW, Washington, DC 20009<br><a href="http://www.ghibellina.com">www.ghibellina.com</a>', 'visited', ' May 16, 2013 ', '3');
+            createMarker('12', 'Graffiato', 38.89867, -77.01958, '707 6th St NW, Washington, DC 20001<br><a href="http://www.graffiatodc.com">graffiatodc.com</a>', 'visited', 'September 30, 2011', '4', 'We tried for a long time to get a reservation here.  Overall went at least three times.  Excellent restaurant overall.  They serve alot more than pizza.  Pizza has very thin crust, which I like.  Creative pizza toppings and combinations.', 'https://pizzawithbeth.yolasite.com/resources/graffiato.png');
+            createMarker('13', 'Italian Kitchen on U', 38.91681, -77.02768, '1110 U St NW, Washington, DC 20009<br><a href="http://www.italianonu.com">http://www.italianonu.com</a>', 'missing', 'x', 'x', "I've never been here, although some people claim I have.  It would have been very late at night and I have no memory");
+            createMarker('14', 'The Italian Store', 38.8967, -77.09639, '3123 Lee Hwy, Arlington, VA 22201<br><a href="http://www.italianstore.com">www.italianstore.com</a>', 'visited', ' April 11, 2013 ', '4', '', 'https://pizzawithbeth.yolasite.com/resources/italianstore.jpg');
+            createMarker('15', "Kavanagh's Pizza Pub", 38.92116, -77.0725, '2400 Wisconsin Ave NW, Washington, DC 20007', 'visited', ' February 3, 2010', 'unknown');
+            createMarker('16', "Lia's", 38.962, -77.08727, '4435 Willard Ave, Chevy Chase, MD 20815<br><a href="http://www.chefgeoff.com">www.chefgeoff.com</a>', 'visited', ' July 21, 2010', '3.5');
+            createMarker('17', 'Lost Dog Cafe', 38.86227, -77.08759, '2920 Columbia Pike, Arlington, VA 22204<br><a href="http://www.lostdogcafe.site">lostdogcafe.site</a>', 'visited', 'August 29, 2016', '4', 'I visited here with Matt and Helah when I came back to DC to speak at a conference.  The toppings on the pizza were in excellent proportion', 'https://pizzawithbeth.yolasite.com/resources/lostdog.jpg');
+            createMarker('18', 'Menomale', 38.92484, -76.99022, '2711 12th St NE, Washington, DC 20018<br><a href="http://www.menomale.us">menomale.us</a>', 'visited', ' October 11, 2014 ', '4.5', 'I visited two weeks before I moved from DC, in a last-minute attempt to finish the DC Pizza List.  I went to Menomale with my parents.  We had an excellent time!  The pizza was great.  We split two pizzas between the 3 of us', 'https://pizzawithbeth.yolasite.com/resources/menomale.jpg');
+            createMarker('19', 'Matchbox', 38.90007, -77.02241, '713 H St NW, Washington, DC 20001<br><a href="http://www.matchboxrestaurants.com">www.matchboxrestaurants.com</a>', 'visited', 'May 31, 2010 ', '4.5');
+            createMarker('20', 'Matchbox', 38.89867, -77.01958, '1901 14th St NW, Washington, DC 20009<br><a href="http://www.matchboxrestaurants.com">www.matchboxrestaurants.com</a>', 'visited', ' December 29, 2012  ', '4', ' ', 'https://pizzawithbeth.yolasite.com/resources/matchbox14.jpg');
+            createMarker('21', "Pete's New Haven Style Apizza", 38.95448, -77.08295, '4940 Wisconsin Ave, Washington, DC 20016<br><a href="http://www.petesapizza.com">petesapizza.com</a>', 'visited', ' November 28, 2010', '4.5');
+            createMarker('22', 'Piola - DC', 38.91954, -77.03218, '2208 14th St NW, Washington, DC 20009<br><a href="http://www.piola.it">www.piola.it</a>', 'missing', 'unknown', 'unknown');
+            createMarker('23', 'Piola - Arlington', 38.93055, -77.03766, '1550 Wilson Blvd, Arlington, VA 22209<br><a href="http://www.piola.it">www.piola.it</a>', 'visited', ' November 9, 2013 ', '3.5');
+            createMarker('24', 'Pi Pizzeria', 38.89712, -77.02474, '910 F St NW, Washington, DC 20004<br><a href="http://www.pi-pizza.com">pi-pizza.com</a>', 'visited', ' May 4, 2012 ', '5', ' ', 'https://pizzawithbeth.yolasite.com/resources/pipizzeria.jpg');
+            createMarker('25', 'Pizza No. 17', 38.91058, -77.03817, '1523 17th St NW, Washington, DC 20036', 'visited', ' March 22, 2011', '4', 'No longer exists', 'https://pizzawithbeth.yolasite.com/resources/no17pizza.jpg');
+            createMarker('26', 'Pizzeria Paradiso - Georgetown', 38.90489, -77.06561, '3282 M St NW, Washington, DC 20007<br><a href="http://www.eatyourpizza.com">www.eatyourpizza.com</a>', 'missing');
+            createMarker('27', 'Pizzeria Paradiso - P St', 38.90977, -77.04521, '2003 P St NW, Washington, DC 20036<br><a href="http://www.eatyourpizza.com">www.eatyourpizza.com</a>', 'visited', ' May 8, 2010 ', '4.5');
+            createMarker('28', 'Pupatella', 38.8776, -77.12221, '5104 Wilson Blvd, Arlington, VA 22205<br><a href="http://www.pupatella.com">www.pupatella.com</a>', 'visited', ' May 25, 2016 ', '3');
+            createMarker('29', 'Radius Pizza', 38.93055, -77.03766, '3155 Mt Pleasant St NW, Washington, DC 20010<br><a href="http://www.graffiatodc.com">graffiatodc.com</a>', 'visited', ' December 22, 2013 ', '5', ' ', 'https://pizzawithbeth.yolasite.com/resources/radius.jpg');
+            createMarker('30', 'RedRocks Columbia Heights', 38.93168, -77.02801, '1036 Park Rd NW, Washington, DC 20010<br><a href="http://www.redrockscolheights.com">www.redrockscolheights.com</a>', 'visited', ' May 26, 2012  ', '3.5');
+            createMarker('31', 'Rustico Restaurant & Bar ', 38.88022, -77.10843, '4075 Wilson Blvd, Arlington, VA 22203<br><a href="http://www.rusticorestaurant.com">www.rusticorestaurant.com</a>', 'visited', ' October 2, 2013 ', '3.5');
+            createMarker('32', 'Seventh Hill Pizza', 38.88531, -76.99639, '327 7th St SE, Washington, DC 20003<br><a href="http://www.7hpizzaeasternmarket.com">7hpizzaeasternmarket.com</a>', 'visited', ' June 9, 2013 ', '4.5', ' ', 'https://pizzawithbeth.yolasite.com/resources/seventhhill.jpg');
+            createMarker('33', 'Timber Pizza Company', 38.94204, -77.02382, '809 Upshur St NW, Washington, DC 20011<br><a href="http://www.timberpizza.com">www.timberpizza.com</a>', 'missing', '', '');
+            createMarker('34', 'Vace Italian Delicatessen', 38.93401, -77.05715, '3315 Connecticut Ave NW, Washington, DC 20008<br><a href="http://www.vaceitaliandeli.com">www.vaceitaliandeli.com</a>', 'visited', ' July 6, 2013 ', '4', ' ', 'https://pizzawithbeth.yolasite.com/resources/vace.jpg');
+            createMarker('35', 'Vapiano', 38.90535, -77.04193, '1800 M St NW, Washington, DC 20036<br><a href="http://www.vapiano.us">www.vapiano.us</a>', 'visited', 'June 14, 2010', '5');
+            createMarker('36', 'Vapiano', 38.90014, -77.02106, '625 H St NW, Washington, DC 20001<br><a href="http://.vapiano.com">us.vapiano.com</a>', 'visited', ' April 2, 2011 ', '5');
+            createMarker('37', 'We, The Pizza', 38.8866, -77.00171, '305 Pennsylvania Ave SE, Washington, DC 20003<br><a href="http://www.wethepizza.com">wethepizza.com</a>', 'visited', ' March 13, 2015 ', '4', 'My friend Becca and I came here to carbo-load before the DC Rock n Roll half marathon.  We got slices.', 'https://pizzawithbeth.yolasite.com/resources/wethepizza.jpg');
+            createMarker('38', 'Wiseguy Pizza', 38.89962, -77.01598, '300 Massachusetts Ave NW #1, Washington, DC 20001<br><a href="http://www.wiseguynypizza.com">www.wiseguynypizza.com</a>', 'visited', ' December 9, 2012  ', '4', '  ', 'https://pizzawithbeth.yolasite.com/resources/wiseguy.jpg');
+createMarker('39', 'Pizzeria Locale', 40.01927, -105.27264, '1730 Pearl St<br>Boulder, CO 80302','visited',"May 14, 2017",'4');
+createMarker('40', "Buddy's Pizza", 42.41893, -83.06412, '17125 Conant St<br>Detroit, MI 48212','visited',"November 28, 2015",'5');
+createMarker('41', "Grimaldi's Pizza", 40.7026, -73.99321, '1 Front St<br>Brooklyn, NY 11201','visited',"October 19, 2014",'5');
+createMarker('42', "Don Antonio", 40.76271, -73.9867, '309 W 50th St<br>New York, NY 10019','visited',"September 26, 2017",'4.5');
+createMarker('43', "Prince Street Pizza", 40.72308, -73.99452, 'A, 27, Prince St<br>New York, NY 10012','missing');
+createMarker('44', "Proper Brick Oven & Tap Room", 40.44355, -80.00021, '139 7th St<br>Pittsburgh, PA 15222','visited',"August 20, 2017",'4');
+createMarker('45', "Caliente Pizza & Drafthouse", 40.46203, -79.9501, '4624 Liberty Ave<br>Pittsburgh, PA 15224','visited',"August 19, 2017",'4.5');
+createMarker('46', "Fairway Restaurant & Pizzeria", 41.85297, -69.98827, 'State Hwy<br>Eastham, MA 02642','visited',"July 15, 2017",'3');
+createMarker('47', "Lou Malnati's Pizzeria", 41.87149, -87.62712, '805 S State St<br>Chicago, IL 60605','visited',"May 10, 2017",'5');
+createMarker('48', "Pizzeria Lola", 44.9018, -93.31841, '5557 Xerxes Ave S<br>Minneapolis, MN 55410','visited',"May 6, 2017",'5');
+createMarker('49', "Good Neighbor Pizzeria", 45.57156, -122.65718, '800 NE Dekum St<br>Portland, OR 97211','visited',"April 29, 2016",'4.5');
+createMarker('50', "Fratelli La Bufala", 25.7743, -80.134, '437 Washington Ave<br>Miami Beach, FL 33139','visited',"March 3, 2017",'3.5');
+createMarker('51', "Pizza Rock", 36.17159, -115.14226, "201 N 3rd St, Las Vegas, NV 89101",'visited',"February 11, 2017",'4.5');
+createMarker('52', "Emmy Squared", 40.71215, -73.95569, "364 Grand St, Brooklyn, NY 11211", 'visited',"September 28, 2016",'5');
+createMarker('53', "Kilauea Bakery & Pau Hana Pizza", 22.21203, -159.40701, "2484 Keneke St, Kilauea, HI 96754", 'visited',"June 11, 2016",'4.5');
+createMarker('54',"MOD Pizza", 45.53849, -122.86981, "2540 NW 188th Ave, Hillsboro, OR 97124" , 'visited',"May 22, 2016",'3');
+createMarker('55',"Silver Dollar Pizza Co", 45.5264, -122.69459, "501 NW 21st Ave, Portland, OR 97209" , 'visited',"May 1, 2016",'4');
+createMarker('56',"Paulie Gee's", 40.72965, -73.95859, "60 Greenpoint Ave, Brooklyn, NY 11222" , 'visited',"October 19, 2015",'5');
+createMarker('57',"Zaffiro's Pizzeria", 42.94934, -88.10658, "5200 S Moorland Rd, New Berlin, WI 53151" , 'visited',"November 29, 2014",'4');
+createMarker('58',"Ricardo's Pizza", 42.94174, -87.99651, "5627 Broad St, Greendale, WI 53129" , 'visited',"June 28, 2013",'4');
+createMarker('59',"Bertucci's", 42.35852, -71.18539, "275 Centre St, Newton, MA 02458" , 'visited',"February 12, 2010",'4');
+createMarker('60',"Bill's Pizzeria", 42.33071, -71.1916, "753 Beacon St, Newton Centre, MA 02459" , 'visited',"July 7, 2011",'4.5');
+createMarker('61',"Sweet Tomatoes", 42.33014, -71.19217, "47 Langley Rd, Newton Centre, MA 02459" , 'visited',"July 24, 2011",'4');
+createMarker('62', "Pub Dog Pizza & Drafthouse", 39.27701, -76.61352, "20 E Cross St, Baltimore, MD 21230", 'visited',"June 9, 2014",'3.5');
+createMarker('63',"Dirty Water Dough Company", 42.34979, -71.08111, "222 Newbury St, Boston, MA 02116" , 'visited',"November 29, 2013",'4');
+createMarker('64', "Five50 Pizza Bar", 36.10653, -115.17698, "3730 S Las Vegas Blvd, Las Vegas, NV 89109", 'visited',"August 15, 2013",'4.5');
+createMarker('65',"Bertucci's", 38.9595, -77.40353, "13195 Parcher Ave, Herndon, VA 20170" , 'visited',"February 22, 2013",'4');
+createMarker('66',"Serious Pie", 47.6129, -122.34043, "316 Virginia St, Seattle, WA 98101" , 'visited',"June 24, 2013",'5');
+createMarker('67', "Delancey", 47.67937, -122.3748, "1415 NW 70th St, Seattle, WA 98117", 'visited',"June 21, 2013",'4');
+createMarker('68',"Jimmys NY Pizza", 38.99765, -77.40347, "156 Enterprise St # I, Sterling, VA 20164" , 'visited',"January 28, 2013",'3');
+createMarker('69', "Generous George's", 38.95798, -77.41644, "2321 Dulles Station Blvd C, Herndon, VA 20171", 'visited',"September 16, 2011",'3.5');
+createMarker('70',"Rubino's Pizzeria", 38.95071, -77.40757, "2415 Centreville Rd, Herndon, VA 20171" , 'visited',"December 19, 2012",'3.5');
+createMarker('71',"Gruppo Thin Crust", 40.72468, -73.98161, "98 Avenue B, New York, NY 10009" , 'visited',"September 16, 2012",'4.5');
+createMarker('72',"Crocodile Lounge", 40.73208, -73.98373, "325 E 14th St, New York, NY 10003" , 'visited',"October 15, 2010",'5');
+createMarker('73', "Forcella", 40.71149, -73.9492, "485 Lorimer St, Brooklyn, NY 11211", 'visited',"February 10, 2012",'4.5');
+createMarker('74',"Plum Pizzeria", 40.72973, -73.9872, "157 2nd Ave, New York, NY 10003" , 'visited',"February 10, 2012",'5');
+createMarker('75', "Luzzo's", 40.73057, -73.98346, "213 1st Avenue, New York, NY 10003", 'visited',"August 19, 2011",'5')
+createMarker('76',"Regina Pizzeria", 42.3561, -71.13245, "353 Cambridge St, Boston, MA 02134" , 'visited',"November 7, 2010",'3');
+createMarker('77', "Oggi Gourmet", 42.3727, -71.11883, "30 Dunster St, Cambridge, MA 02138", 'visited',"April 2, 2010",'4');
+createMarker('78', "Little Venice Restaurant", 26.01756, -80.1155, "909 N Broadwalk, Hollywood, FL 33019", 'visited',"August 1, 2013",'4');
+createMarker('79', "Antico Forno", 42.36382, -71.05564, "93 Salem St, Boston, MA 02113", 'visited',"April 26, 2014",'5');
+createMarker('80', "Devil Pizza", 45.48552, 12.41513 , "Str. di Corte Comare, 25, 30142 Venezia VE, Italy", 'visited',"October 27, 2017",'4');
+createMarker('81', "Fresco & Cimmino", 45.4651, 9.19087, "Via Ugo Foscolo, 4, 20121 Milano MI, Italy" , 'visited',"October 24, 2017",'4');
+createMarker('82', "Origano Trevi", 41.90303, 12.48311, "Via di Sant'Andrea delle Fratte, 23/25, 00187 Roma RM, Italy", 'visited',"October 20, 2017",'4.5');
+createMarker('83',"Dar Poeta", 41.89138, 12.46854, "Vicolo del Bologna, 45, 00153 Roma RM, Italy" , 'visited',"October 19, 2017",'4.5');
+createMarker('84',"Trieste Pizza", 41.89629, 12.49404, "Via Urbana, 112, 00184 Roma RM, Italy" , 'visited',"October 18, 2017",'5');
+createMarker('85',"La Cappa D'Oro", 41.90701, 12.45767, "Via Ottaviano, 21, 00192 Roma RM, Italy" , 'visited',"October 19, 2017",'5');
+createMarker('85',"Lucali", 40.6818, -74.00029, "575 Henry St, Brooklyn, NY 11231" , 'missing');
+createMarker('85',"Psycho Suzi's",45.00749, -93.27238,"1900 Marshall St NE, Minneapolis, MN 55418" , 'missing');
+
+createMarker('86',"The Star on Grand", 37.81426, -122.24647, "3425 Grand Ave, Oakland, CA 94610", 'missing');
+createMarker('87',"Gio's Pizza and Bocce", 37.86528, -122.26799, "2420 Shattuck Ave, Berkeley, CA 94704", 'visited',"February 17, 2018",'4.5');
+createMarker('88', "Bare Knuckle Pizza",     37.80194, -122.26986, "351 12th St, Oakland, CA 94607",'missing');
+createMarker('89',"Pizza Moda",     37.87035, -122.28406,"1401 University Ave, Berkeley, CA 94702" , 'missing');
+createMarker('90',"Nick's Pizza",    37.84828, -122.26573 ,"6211 Shattuck Ave, Oakland, CA 94609" , 'visited','March 15, 2017','4');
+createMarker('91',"Nabolom",37.85839, -122.25282 ,"2708 Russell St, Berkeley, CA 94705" , 'visited', 'April 25, 2018','4.5');
+createMarker('92',"Lucia's Berkeley",     37.87163, -122.26869,"2016 Shattuck Ave, Berkeley, CA 94704" , 'visited','February 14, 2018','4.5');
+createMarker('93',"Una Pizza Napoletana",    37.7728, -122.41561 ,"210 11th St, San Francisco, CA 94103", 'visited','December 13, 2014','5');
+createMarker('94',"Ragazza",    37.77245, -122.43747 ,"311 Divisadero St, San Francisco, CA 94117" , 'visited','August 3, 2016','3');
+createMarker('95',"Del Popolo",    37.78962, -122.41137 ,"855 Bush St, San Francisco, CA 94108" , 'visited',"March 19, 2016",'4.5');
+createMarker('96',"Pizzaiolo",    37.83659, -122.26215 ,"5008 Telegraph Ave, Oakland, CA 94609" , 'visited', 'November 19, 2014','4.5');
+createMarker('97',"Golden Boy Pizza",     37.79972, -122.40809,"542 Green St, San Francisco, CA 94133" , 'missing');
+createMarker('98',"Boot and Shoe Service",    37.8128, -122.24677 ,"3308 Grand Ave, Oakland, CA 94610"  , 'visited',"January 9, 2018",'4');
+createMarker('99',"A16 - Oakland",     37.83938, -122.25104,"5356 College Ave, Oakland, CA 94618" , 'visited',"January 13, 207",'4.5');
+createMarker('100',"A16 - SF",37.79987, -122.44209 ,"2355 Chestnut St, San Francisco, CA 94123" , 'missing');
+createMarker('101',"Goat Hill Pizza",     37.76242, -122.39765, "300 Connecticut St, San Francisco, CA 94107 " , 'visited',"January 2, 2015",'4.5');
+createMarker('102',"Zero Zero",    37.78161, -122.40194 , "826 Folsom St, San Francisco, CA 94107 " , 'visited','January 14, 2015','4.5');
+createMarker('103',"Oak & Rye",    37.22762, -121.98182 , " 303 N Santa Cruz Ave, Los Gatos, CA 95030" , 'missing');
+createMarker('104',"PizzaHacker", 37.7441, -122.42061, " 3299 Mission St, San Francisco, CA 94110" , 'missing');
+createMarker('105',"Boulibar",37.7951, -122.39285 , " One Ferry Building #35, San Francisco, CA 94111" , 'missing');
+createMarker('106',"Cupola Pizzeria",    37.78478, -122.40651 , "845 Market St #400, San Francisco, CA 94103 " , 'missing');
+createMarker('107',"Aquitaine Wine Bar & Bistro",    37.78968, -122.40348 , "175 Sutter St, San Francisco, CA 94104 " , 'missing');
+createMarker('108',"La Nebbia",     37.74249, -122.42626, "1781 Church St, San Francisco, CA 94131 " , 'missing');
+createMarker('109',"Vignette Pizzeria",    38.40409, -122.82017 , "6750 McKinley St, Sebastopol, CA 95472 " , 'missing');
+createMarker('110',"Flour + Water",     37.75893, -122.41227, " 2401 Harrison St, San Francisco, CA 94110" , 'visited',"January 24, 2015",'5');
+createMarker('111',"Delarosa",    37.78565, -122.40451 ," 37 Yerba Buena Ln, San Francisco, CA 94103", 'visited',"January 13, 2018",'5');
+createMarker('112',"Gioia Pizzeria",    37.79749, -122.42183 ,"2240 Polk St, San Francisco, CA 94109 " , 'missing');
+createMarker('113',"Gioia Pizzeria",37.88175, -122.28142 ,"1586 Hopkins St, Berkeley, CA 94707 " , 'visited',"December 20, 2016",'4');
+createMarker('114',"Bar Bocce",     37.8596, -122.48479," 1250 Bridgeway, Sausalito, CA 94965", 'visited', "December 7, 2014",'4.5');
+createMarker('115',"Redd Restaurant",     38.39946, -122.35871," 6480 Washington St, Yountville, CA 94599" , 'missing');
+createMarker('116',"Tony's Pizza Napoletana",    37.80031, -122.40905 ," 1570 Stockton St, San Francisco, CA 94133" , 'missing');
+createMarker('117',"Piccino",    37.75766, -122.39008 ," 1001 Minnesota St, San Francisco, CA 94107" , 'visited','November 9, 2014','4.5');
+createMarker('118',"Pizzeria Picco",    37.93391, -122.53558 ,"2033, 316 Magnolia Ave, Larkspur, CA 94939 " , 'missing');
+createMarker('119',"Little Star Pizza",    37.77753, -122.43808 ," 846 Divisadero St, San Francisco, CA 94117" , 'missing');
+createMarker('120',"Little Star Pizza",    37.89055, -122.29682 ," 1181 Solano Ave, Albany, CA 94706" , 'missing');
+createMarker('121',"Little Star Pizza",     37.76641, -122.42226,"400 Valencia St, San Francisco, CA 94103 " , 'missing');
+createMarker('122',"Long Bridge Pizza Co. ",     37.75951, -122.38817, " 2347 3rd St, San Francisco, CA 94107", 'visited', 'April 19, 2016','4.5');
+createMarker('123',"Oenotri",    38.29731, -122.28883 , "1425 1st St, Napa, CA 94559 " , 'missing');
+createMarker('124',"Tommaso's Ristorante Italiano ",    37.79779, -122.40524 , "1042 Kearny St, San Francisco, CA 94133 " , 'missing');
+createMarker('125',"Slicer ",     37.83026, -122.24779, "4395 Piedmont Ave, Oakland, CA 94611 " , 'missing');
+createMarker('126'," Zachary's ",       37.84629, -122.25218 , " 5801 College Ave, Oakland, CA 94618" , 'missing');
+createMarker('127'," Zachary's",        37.94455, -122.0614, "140 Crescent Dr, Pleasant Hill, CA 94523 " , 'missing');
+createMarker('128'," Zachary's",        37.77779, -121.97252 , "3110 Crow Canyon Pl D, San Ramon, CA 94583 " , 'missing');
+createMarker('129',"Arinell Pizza ",     37.76468, -122.42167, "509 Valencia St, San Francisco, CA 94110 " , 'visited',"May 23, 2015",'3.5');
+createMarker('130',"Arinell Pizza ",     37.87097, -122.2675, "2109 Shattuck Ave, Berkeley, CA 94704", 'missing');
+createMarker('131',"Capo's",    37.79853, -122.4084,"641 Vallejo St, San Francisco, CA 94133",'visited', "July 2, 2015",'4');
+createMarker('132',"Pauline's Pizza",    37.76868, -122.42252,"260 Valencia St, San Francisco, CA 94103",'visited','June 6, 2017','4.5');
+createMarker('133',"Cheeseboard",    37.87987, -122.26947,"1512 Shattuck Ave, Berkeley, CA 94709",'visited');
+createMarker('134',"Beretta",    37.75384, -122.4207,"1199 Valencia St, San Francisco, CA 94110",'visited',"October 8, 2015",'5');
+createMarker('135',"The Pizza Place on Noriega",    37.75281, -122.50559,"3901 Noriega St, San Francisco, CA 94122",'missing');
+createMarker('136',"Palio",    37.79388, -122.4037,"640 Sacramento St, San Francisco, CA 94111",'missing');
+createMarker('137'," Mozzeria",    37.76492, -122.4249,"3228 16th St, San Francisco, CA 94103 " , 'visited','November 28, 2017','4.5');
+createMarker('138',"Kezar Pizzetta ",    37.76567, -122.4572," 775 Frederick St, San Francisco, CA" , 'missing');
+createMarker('139',"Pizza Inferno ",    37.78624, -122.43312," 1800 Fillmore St, San Francisco, CA 94115" , 'missing');
+createMarker('140'," The Sausage Factory",    37.76051, -122.4347," 517 Castro St, San Francisco, CA 94114" , 'missing');
+createMarker('141',"Escape From New York Pizza ",    37.75552, -122.41965," 3242 22nd St, San Francisco, CA 94110" , 'visited',"January 28, 2016",'3');
+createMarker('142'," Lake Tahoe Pizza Company",    38.90767, -120.00173," 1168 Emerald Bay Rd, South Lake Tahoe, CA 96150" , 'missing');
+createMarker('143',"Willow Street Pizza ",    37.22242, -121.98423," 20 S Santa Cruz Ave, Los Gatos, CA 95030" , 'missing');
+createMarker('144'," Emilia's Pizzeria",    37.85551, -122.26641,"2995 Shattuck Ave, Berkeley, CA 94705 " , 'visited',"August 26, 2017",'5');
+createMarker('145'," Diavola Pizzeria & Salumeria",    38.70633, -122.9041,"21021 Geyserville Ave, Geyserville, CA 95441 " , 'missing');
+createMarker('146',"Il Casaro Pizzeria ",    37.79849, -122.40732,"348 Columbus Ave, San Francisco, CA 94133 " , 'missing');
+createMarker('147'," Presidio Pizza Company",    37.78703, -122.44004," 1862 Divisadero St, San Francisco, CA 94117" , 'visited','February 10,2018','4');
+createMarker('148',"Trabocco Kitchen and Cocktails ",    37.75729, -122.25169," 2213 S Shore Center, Alameda, CA 94501" , 'missing');
+createMarker('149',"Stone and Embers ",    39.05913, -123.43433," 9000 CA-128, Philo, CA 95466" , 'missing');
+createMarker('150',"Arizmendi Bakery ",    37.81064, -122.24484," 3265 Lakeshore Ave, Oakland, CA 94610" , 'visited','fill out date','4');
+createMarker('151',"Arizmendi Bakery ",    37.76343, -122.46643,"1331 9th Ave, San Francisco, CA 94122 " , 'visited',"November 8, 2015",'4');
+createMarker('152',"Arizmendi Bakery ",    37.75255, -122.42102," 1268 Valencia St, San Francisco, CA 94110" , 'missing');
+createMarker('153',"Gaspare's ",    37.78058, -122.47915,"5546 Geary Blvd, San Francisco, CA 94121 " , 'missing');
+createMarker('154',"Gialina ",    37.73401, -122.43428," 2842 Diamond St, San Francisco, CA 94131" , 'visited', "December 22, 2017",'4');
+createMarker('155'," Marcello's Pizza",    37.76206, -122.43538,"420 Castro St, San Francisco, CA 94114 " , 'visited','December 18, 2015','4');
+createMarker('156',"Pizzetta 211 ",    37.78367, -122.48297," 211 23rd Ave, San Francisco, CA 94121", 'visited','August 26, 2016','4.5');
+createMarker('157'," All Good Pizza",    37.73867, -122.38979,"1605 Jerrold Ave, San Francisco, CA 94124 " , 'missing');
+createMarker('158'," Pizza Orgasmica",    37.79872, -122.43603,"3157 Fillmore St, San Francisco, CA 94123 " , 'visited','September 3, 2016','3.5');
+createMarker('159'," Carmel Pizza Company",    37.80749, -122.41721,"2826 Jones St, San Francisco, CA 94133 " , 'missing');
+createMarker('160',"  Mythic Pizza",     37.77182, -122.43126," 551 Haight St, San Francisco, CA 94117" , 'missing');
+createMarker('161',"Haystack Pizza ",      37.75146, -122.4292 ," 3881 24th St, San Francisco, CA 94114" , 'missing');
+createMarker('162',"Nob Hill Cafe ",      37.79318, -122.41263 ,"1152 Taylor St, San Francisco, CA 94108 " , 'missing');
+createMarker('163'," Tony’s Coal Fired Pizza & Slice House",       37.80024, -122.40905," 1556 Stockton St, San Francisco, CA 94133" , 'missing');
+createMarker('164'," Bellissimo",     37.78844, -122.41562  ," 920 Sutter St, San Francisco, CA 94109" , 'missing');
+createMarker('165',"Pizzeria Delfina ",      37.7891, -122.43443 ," 2406 California St, San Francisco, CA 94115" , 'missing');
+createMarker('166',"Delfina ",      37.76141, -122.42437 ," 3621 18th St, San Francisco, CA 94110" , 'missing');
+createMarker('167'," Pizzeria Delfina",      37.44343, -122.1604 ," 651 Emerson St, Palo Alto, CA 94301", 'visited','April 13, 2015','4');
+createMarker('168',"Terún ",     37.42592, -122.14547  ,"448 California Ave, Palo Alto, CA 94306 " , 'missing');
+createMarker('169',"Vesta",     37.4868, -122.22679 ,"2022 Broadway, Redwood City, CA 94063" , 'visited','May 18, 2016','4.5');
+createMarker('170',"Pizza My Heart",     37.44486, -122.16224 ,"220 University Ave, Palo Alto, CA 94301", 'visited','July 12, 2014','4.5');
+createMarker('171',"Pizza My Heart",     37.83392, -122.29256 ,"5613 Bay St, Emeryville, CA 94608" , 'missing');
+createMarker('172',"Pieology Pizzeria",     37.71036, -122.16305 ,"1269 Marina Blvd, San Leandro, CA 94577" , 'missing');
+createMarker('173',"Pieology",     37.66801, -122.46849 ,"309 Gellert Blvd, Daly City, CA 94015" , 'missing');
+createMarker('174',"Tasty Subs & Pizza",    37.38342, -121.99545  ,"528 Lawrence Expy, Sunnyvale, CA 94085" , 'missing');
+createMarker('175',"Mission Pizza & Pub",     37.53084, -121.93706 ,"1572 Washington Blvd, Fremont, CA 94539" , 'missing');
+createMarker('176',"Lanesplitter Pizza & Pub",     37.83497, -122.26323 ,"4799 Telegraph Ave, Oakland, CA 94609" , 'visited','January 14, 2014','4.5');
+createMarker('177',"Lanesplitter Pizza & Pub",     37.8686, -122.29178 ,"2033 San Pablo Ave, Berkeley, CA 94702" , 'missing');
+createMarker('178',"Slice House by Tony Gemignani",       37.78089, -122.3913 ,"680 2nd St, San Francisco, CA 94107", 'visited','April 30, 2015','3');
+createMarker('179',"Pi Bar",      37.74993, -122.42071 ,"1432 Valencia St, San Francisco, CA 94110",'visited','March 24, 2016','4.5');
+createMarker('180',"The Mill",       37.77646, -122.43783 ,"736 Divisadero St, San Francisco, CA 94117" , 'missing');
+createMarker('181',"Oz Pizza",    37.76063, -122.43515,"508 Castro St, San Francisco, CA 94114" , 'missing');
+createMarker('182', "The Pizza Shop",    37.75261, -122.41436,"3104 24th St, San Francisco, CA 94110", 'missing');
+createMarker('183',"Za Pizza",    37.79854, -122.41915,"1919 Hyde St, San Francisco, CA 94109" ,'July 30, 2016','3.5');
+createMarker('184', "Pizzeria Avellino",    37.79835, -122.44708,"2769 Lombard St, San Francisco, CA 94123", 'missing');
+createMarker('185', "Patxi's Pizza",     37.8002, -122.436,"3318 Fillmore St, San Francisco, CA 94123",'missing');
+createMarker('186',"Patxi's Pizza" ,     37.50564, -122.25989,"677 Laurel St Suite B, San Carlos, CA 94070",'visited','September 3, 2017','3.5');
+createMarker('187',"Patxi's Pizza" ,    37.44518, -122.16322 , "441 Emerson St, Palo Alto, CA 94301" ,'visited','June 26, 2010','3.5');
+createMarker('188', "Patxi's Pizza",     37.40315, -121.93335,"3350 Zanker Rd, San Jose, CA 95134",'visited','January 14, 2014','3');
+createMarker('189', "Forge Pizza",     37.79435, -122.27564,"66 Franklin St #100, Oakland, CA 94607","April 16, 2017",'4.5');
+createMarker('190', "Doppio Zero",    37.39444, -122.07896,"160 Castro St, Mountain View, CA 94041","April 16, 2017",'4.5');
+createMarker('191', "Sliver Pizzeria",     37.86564, -122.2589, "2468 Telegraph Ave, Berkeley, CA 94704",'visited','September 23, 2016','4.5');
+createMarker('192', "Drake's Dealership",     37.81263, -122.26643, "2325 Broadway, Oakland, CA 94612",'visited',"December 12, 2016",'3.5');
+createMarker('193', "Jupiter",     37.86979, -122.26758, "2181 Shattuck Ave, Berkeley, CA 94704",'visited','October 26, 2016','4.5');
+createMarker('194', "Barbarian Pizza Bar",     37.8717, -122.26864, "2012 Shattuck Ave, Berkeley, CA 94704",'visited',"January 3, 2018",'2');
+createMarker('195', "Artichoke Basille's Pizza",    37.86797, -122.25684,"2590 Durant Ave, Berkeley, CA 94704",'visited',"February 16, 2016",'3.5');
+createMarker('196',"Bobby G's Pizzeria",    37.87184, -122.26901,"2072 University Ave, Berkeley, CA 94704" ,'visited', "February 8, 2017",'4.5');
+createMarker('197',"Abe's Pizza",     37.86799, -122.25923, "2340 Telegraph Ave, Berkeley, CA 94704",'visited',"February 16, 2016",'3');
+createMarker('198', "PIQ Berkeley",     37.8713, -122.26813, "91 Shattuck Ave, Berkeley, CA 94704",'visited','December 5, 2017','2');
+createMarker('199',"Pizzahhh",     37.87526, -122.25982, "2503 Hearst Ave, Berkeley, CA 94709" ,'visited', "February 16, 2016",'4');
+createMarker('200', "Gather",     37.8695, -122.26607, "2200 Oxford St, Berkeley, CA 94704",'visited', 'January 28, 2017','4');
+createMarker('201', "Blue Line Pizza",     37.69943, -122.48225, "511 Westlake Center, Daly City, CA 94015",'visited',"February 18, 2016",'3.5');
+createMarker('202',"Blue Line Pizza",        37.39454, -122.0787, "146 Castro St, Mountain View, CA 94041" ,'visited',"May 30, 2014",'3.5');
+createMarker('203', "Extreme Pizza",     37.79775, -122.43183, "1980 Union St, San Francisco, CA 94123",'visited',"October 8, 2016",'3');
+createMarker('204',"panCoast pizza",     37.89015, -122.05721, "1516 S Main St, Walnut Creek, CA 94596" ,'visited','October 16, 2016',3,);
+createMarker('205',"Viva Italiano Pizzeria",     37.65128, -122.49176, "67 Bill Drake Way, Pacifica, CA 94044" ,'visited','August 14, 2016','3.5');
+createMarker('206',"Seniore's Pizza",     37.86775, -122.25828, "2518 Durant Ave, Berkeley, CA 94704" ,'visited','February 16, 2016','2');
+createMarker('207', "Calzone's Restaurant",     37.79905, -122.40818, "430 Columbus Ave, San Francisco, CA 94133",'visited', "July 2, 2015",3,);
+createMarker('208', "Legends Pizza Co",     37.23478, -121.87412, "5965 Almaden Expy, San Jose, CA 95120",'January 14, 2014','3');
+createMarker('209',"Howie's Artisan Pizza",     37.43802, -122.16003, "855 El Camino Real #60, Palo Alto, CA 94301" ,'visited','October 25, 2014','4');
+createMarker('210',"Dopo",     37.82886, -122.24953, "4293 Piedmont Ave, Oakland, CA 94611",'missing');
+createMarker('211',"Rotten City Pizza",     37.84797, -122.29205, "6613 Hollis St, Emeryville, CA 94608", 'missing');
+createMarker('212',"Rainbow Pizza",     37.52118, -122.33722, "112 De Anza Blvd, San Mateo, CA 94402", 'missing');
+createMarker('213', "Casey's Pizza",     37.77365, -122.39162, "2245, 1170 4th St, San Francisco, CA 94158" ,'missing');
+createMarker('214',"Jersey Pizza",     37.78754, -122.39896, "145 2nd St, San Francisco, CA 94105", 'missing');
+createMarker('215',"Local Kitchen & Wine Merchant",     37.78679, -122.39421, "330 1st St #1, San Francisco, CA 94105",'missing');
+createMarker('216',"Fiorella",     37.78184, -122.48452, "2339 Clement St, San Francisco, CA 94121",'missing');
+createMarker('217',"Ca' Momi Osteria",     38.2985, -122.2866, "1141 1st St, Napa, CA 94559", 'missing');
+createMarker('218',"Montesacro Pinseria",     37.78161, -122.41013, "510 Stevenson St, San Francisco, CA 94103",'missing');
+createMarker('219',"Contrada",     37.79743, -122.4345, "2136 Union St, San Francisco, CA 94123",'missing');
+createMarker('220',"Pink Onion",     37.76876, -122.41488, "64 14th St, San Francisco, CA 94103",'missing');
+createMarker('221',"Bluebird Pizzeria",     37.73179, -122.16094, "496 E 14th St, San Leandro, CA 94577",'missing');
+createMarker('222',"Zante Pizza & Indian Cuisine",     37.74112, -122.42252, "3489 Mission St, San Francisco, CA 94110",'missing');
+createMarker('223',"Ardiana",     37.74246, -122.42631, "1781 Church St, San Francisco, CA 94131",'missing');
+createMarker('224',"Red Tomato Pizza House",     37.87207, -122.27012, "1005, 2017 University Ave, Berkeley, CA 94704",'missing');
+
+createMarker('225',"Michael's Pizzeria",33.770534, -118.190629,"210 E 3rd St, Long Beach, CA 90802",'visited', 'April 8, 2018',4);
+createMarker('226',"La Parolaccia",33.765510, -118.156960,"2945 E Broadway, Long Beach, CA 90803",'missing');
+createMarker('227',"Cane Rosso",32.782700, -96.785766,"2612 Commerce St, Dallas, TX 75226",'visited', "May 5, 2018", 4.5 );
+createMarker('228',"Pizzeria Mozza",34.083192, -118.338905,"641 N Highland Ave, Los Angeles, CA 90036","msising" );
+createMarker('229',"Triple Beam Pizza",34.110465, -118.190170,"5918 N Figueroa St, Los Angeles, CA 90042",'missing' );
+createMarker('230',"Le Chamois & Loft Bar",39.196592, -120.236101,"1960 Squaw Valley Rd, Olympic Valley, CA 96146",'visited',"December 31, 2017",5 );
+createMarker('231',"Fireside Pizza Company",39.197049, -120.234602,"1985 Squaw Valley Rd # 25, Olympic Valley, CA 96146",'visited',"March 3, 2018",3.5 );
+createMarker('232',"Pasquale's Pizzeria",40.594535, -79.948272,"4731 William Flinn Hwy, Allison Park, PA 15101",'visited',"May 20, 2018",3.5 );
+createMarker('233',"Jolly Pumpkin Cafe & Brewery",42.279176, -83.748464,"311 S Main St, Ann Arbor, MI 48104",'visited',"May 19, 2018",4.5 );
+createMarker('234',"Rubirosa",40.722752, -73.996236,"235 Mulberry St, New York, NY 10012",'missing');
+createMarker('235',"Lucali",25.795200, -80.143979,"1930 Bay Rd, Miami Beach, FL 33139",'visited',"March 13, 2018",'5');
+createMarker('236',"King Cong Brewing Co.",38.607888, -121.455984,"1709 Del Paso Blvd, Sacramento, CA 95815",'visited',"June 10, 2018",'3.5');         
+ createMarker('237',"Una Pizza Napoletana",40.721742, -73.988588,'175 Orchard St, New York, NY 10002<br><a href="http://www.unapizza.com" target="_blank">unapizza.com</a>','missing');      
+                   
+         legend_txt='<font size=3><a href="javascript:hidemarkers(0)">Missing</a><br><a href="javascript:hidemarkers(1)">Visited</a><br><a href="javascript:hidemarkers(2)">Show All</a></font size>';
+
+         var legend = document.getElementById('legend');
+            var div1 = document.createElement('div1');
+            div1.innerHTML = legend_txt;
+            legend.appendChild(div1);
+
+   map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
+
+                  if(iphone == 1){
+               document.getElementById('page_title').style.fontSize='20px';
+                 document.getElementById('home_pic').style.height='7%';
+              document.getElementById('home_pic').style.width='7%';
+            }
+               
+                    map.controls[google.maps.ControlPosition.TOP].push(top_bar);                         
+                    document.getElementById('top_bar').style.width = '100%';        
+                    document.getElementById('map').style.height = '100%';
+                
+            
+
+
+       
+  
+        }
+
+   
+  </script> 
+  <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDILriXJI9GBifa2hlHvtz3fd7LpsHcv_w&amp;callback=initMap">
+  </script> </span></body>
+</html>
