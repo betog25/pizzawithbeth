@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Pizza with Beth - DC </title>
     <meta name="viewport" content="width=width-device, initial-scale=1.0, user-scalable=yes">
-    <meta http-equiv="content-type" content="text/html;  charset="utf-8">
-    <link rel="apple-touch-icon" sizes="57x57" href="http://www.pizzawithbeth.com/images/pizza_icon.png">
+    <meta http-equiv="content-type" content="text/html;  charset=" utf-8">
+    <link rel="apple-touch-icon" sizes="57x57" href="https://www.pizzawithbeth.com/images/pizza_icon.png">
     <link href="css/uxcore.css" rel="stylesheet">
     <link href="css/customer-comp.css" rel="stylesheet">
     <style>
         pdiv {
-    opacity: 0.1;
-    height: 5px;
-        }            
-html,
-body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-}
+            opacity: 0.1;
+            height: 5px;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
         #map {
-    width: 100%;
+            width: 100%;
         }
+
         #container {
-    height: 15px;
-    width: 5000px;
-    position: relative;
+            height: 15px;
+            width: 5000px;
+            position: relative;
         }
+
         #image {
-    position: absolute;
-    left: 2px;
-    top: 2px;
+            position: absolute;
+            left: 2px;
+            top: 2px;
         }
+
         #text {
             z-index: 40;
             position: absolute;
@@ -41,444 +47,505 @@ body {
             left: 13px;
             top: 10px;
         }
-.labels {
-    color: red;
-    background-color: white;
-    font-family: "Lucida Grande", "Arial", sans-serif;
-    font-size: 10px;
-    font-weight: bold;
-    text-align: center;
-    width: 40px;     
-    border: 2px solid black;
-    white-space: nowrap;
-}
-.image 
-{ 
-    position: relative; /* To help the image + text element to get along with the rest of the page*/ 
-    width: 100%; /* for IE 6 */ 
-}
 
-h3 {
-    position: absolute;
-    bottom: 107px;
-    left: 16px;
-    width: 100% ;
-    font-size: 14px;
-}
+        .labels {
+            color: red;
+            background-color: white;
+            font-family: "Lucida Grande", "Arial", sans-serif;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: center;
+            width: 40px;
+            border: 2px solid black;
+            white-space: nowrap;
+        }
 
-h4 {
-    position: absolute;
-    bottom: 182px;
-    left: 16px;
-    width: 100% ;
-    font-size: 14px;
-}
-h2 {
-    position: absolute;
-    bottom: 246px;
-    left: 13px;
-    width: 100% ;
-    font-size: 14px;
-}
-h1 {
-    position: absolute;
-    bottom: 142px;
-    left: 14px;
-    width: 100% ;
-    font-size: 14px;
-}
+        .image {
+            position: relative;
+            /* To help the image + text element to get along with the rest of the page*/
+            width: 100%;
+            /* for IE 6 */
+        }
 
- #text2 {
-    z-index: 40;
-    position: absolute;
-    color: black;
-    font-size: 12px;
-    font-weight: bold;
-    left: 18px;
-    top: 16px;
-}
+        h3 {
+            position: absolute;
+            bottom: 107px;
+            left: 16px;
+            width: 100%;
+            font-size: 14px;
+        }
 
-#legend {
-    font-family: Arial, sans-serif;
-    background: #fff;
-    padding: 5px;
-    margin: 5px;
-    border: 2px solid #000;
-}
+        h4 {
+            position: absolute;
+            bottom: 182px;
+            left: 16px;
+            width: 100%;
+            font-size: 14px;
+        }
 
-#legend h3 {
-    margin-top: 0;
-}
-  
-#legend img {
-    vertical-align: middle;
-}
+        h2 {
+            position: absolute;
+            bottom: 246px;
+            left: 13px;
+            width: 100%;
+            font-size: 14px;
+        }
 
-</style>
+        h1 {
+            position: absolute;
+            bottom: 142px;
+            left: 14px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        #text2 {
+            z-index: 40;
+            position: absolute;
+            color: black;
+            font-size: 12px;
+            font-weight: bold;
+            left: 18px;
+            top: 16px;
+        }
+
+        #legend {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            padding: 5px;
+            margin: 5px;
+            border: 2px solid #000;
+        }
+
+        #legend h3 {
+            margin-top: 0;
+        }
+
+        #legend img {
+            vertical-align: middle;
+        }
+    </style>
 </head>
 
 <body>
 
 
-<div valign="center" style="background-color: orange;"><div ><a href="index.html"><img id="home_pic" valign="center" align="left" src="http://www.pizzawithbeth.com/images/home.png" width="3%" height="3%"></a></div><div id="page_title" valign="center" align="center" style="font-size: 40px;">DC Pizza List</div></div>
-<div id="map"></div>
-<div id="side_bar" style="overflow-y: scroll"></div>
-<div id="legend"></div>
+    <div valign="center" style="background-color: orange;">
+        <div><a href="index.html">
+                <img id="home_pic" align="left" src="https://www.pizzawithbeth.com/images/home.png" width="4%" height="4%"></a>
+        </div>
+        <div id="page_title" valign="center" align="center" style="font-size: 40px;">DC Pizza List</div>
+    </div>
+    <div id="map"></div>
+    <div id="side_bar" style="overflow-y: scroll"></div>
+    <div id="legend"></div>
 
-<script javascript="">
-       
-var iphone = 0;
+    <script javascript="">
+        var iphone = 0;
 
-function DetectIphone() {
+        function DetectIphone() {
 
-    if (navigator.userAgent.match(/Android/i) ||
-          navigator.userAgent.match(/webOS/i) ||
-          navigator.userAgent.match(/iPhone/i) ||
-          navigator.userAgent.match(/iPad/i) ||
-          navigator.userAgent.match(/iPod/i) ||
-          navigator.userAgent.match(/BlackBerry/i) ||
-          navigator.userAgent.match(/Windows Phone/i)) {
-        iphone = 1;
-    } else {
-        iphone = 0;
-    }
-}
-
-var map;
-var infoWindow;
-var side_bar_html = "";
-var gmarkers = [];
-var legend_txt ="";
-
-
-function hidemarkers(index) {
-
-    document.getElementById('side_bar').scrollTop =0;
-    if (infoWindow) 
-        infoWindow.close();
-
-    var option = ""
-    if (index == "0")
-        option = "missing";
-    if (index == "1")
-        option = "visited";
-
-
-    var strMessage1 = document.getElementById("side_bar").childNodes[0];
-
-    var html = strMessage1.innerHTML;
-
-    if (index == "2") {
-        if (iphone==0){
-            map.setZoom(12);
-            map.setCenter(new google.maps.LatLng(38.923,-77.13));
-        }
-
-        if (iphone==1){
-            map.setZoom(11);
-            map.setCenter(new google.maps.LatLng(38.923,-77.05));
-        }
-
-        html = html.replace(/display: none;/g,'display: block;');
-        strMessage1.innerHTML = html;
-
-        for (var i = 0; i < gmarkers.length; i++){
-            gmarkers[i].setVisible(true);           
-        }
-    } else {
-
-        html = html.replace(/display: none;/g,'display: block;');
-
-        for (var i = 0; i < gmarkers.length; i++) {
-            gmarkers[i].setVisible(true); 
-
-            if (gmarkers[i].labelClass != option){          
-                gmarkers[i].setVisible(false);
-                var i2=i+1;       
-                var replace_str = '<div class="image" id="hidden_div'+i2+'" style="background-color: white; display: block;'
-                var new_str =  '<div class="image" id="hidden_div'+i2+'" style="background-color: white; display: none;'
-                html = html.replace(replace_str,new_str);
-                strMessage1.innerHTML = html;
+            if (navigator.userAgent.match(/Android/i) ||
+                navigator.userAgent.match(/webOS/i) ||
+                navigator.userAgent.match(/iPhone/i) ||
+                navigator.userAgent.match(/iPad/i) ||
+                navigator.userAgent.match(/iPod/i) ||
+                navigator.userAgent.match(/BlackBerry/i) ||
+                navigator.userAgent.match(/Windows Phone/i)) {
+                iphone = 1;
+            } else {
+                iphone = 0;
             }
         }
-    }
-}
 
-function myclick(myLen) {
+        var map;
+        var infoWindow;
+        var side_bar_html = "";
+        var gmarkers = [];
+        var legend_txt = "";
 
-    google.maps.event.trigger(gmarkers[myLen], "click");
+        function sortMarkers(ratingSort) {
+            side_bar_html = "";
+            if (ratingSort == 3) {
+                gmarkers.sort(function(a, b) {
+                    var x = a.customInfo[3];
+                    var y = b.customInfo[3];
+                    if (x > y) {
+                        return -1;
+                    }
+                    if (x < y) {
+                        return 1;
+                    }
+                    return 0;
+                });
 
-    map.setZoom(16);
-
-}
-
-function hideDivs(y) {
-
-    if (iphone == 0) {
-        //  if (y <= 100)
-        y++;
-    }
-
-    if (iphone == 1) {
-        if (y >= 560)
-            y--;
-    }
-
-    var offset = document.getElementById("hidden_div" + y).offsetTop;
-
-    if (iphone == 1) {
-        var h = document.getElementById("hidden_div" + y).clientHeight;
-             
-        var total_height = 0;
-        for (r = y; r > 0; r--) {
-                    
-            total_height += document.getElementById("hidden_div" + r).clientHeight;
-            if ("block" == document.getElementById("hidden_div" + r).style.display)
-            {                     
-                total_height += 10;
+            } else {
+                gmarkers.sort(function(a, b) {
+                    var x = a.customInfo[0].toLowerCase();
+                    var y = b.customInfo[0].toLowerCase();
+                    if (x < y) {
+                        return -1;
+                    }
+                    if (x > y) {
+                        return 1;
+                    }
+                    return 0;
+                });
             }
 
+            for (var i = 0; i < gmarkers.length; i++) {
+                google.maps.event.clearInstanceListeners(gmarkers[i]);
+                gmarkers[i].label.text = i + 1;
+
+                var name = gmarkers[i].customInfo[0];
+                var icon_color = gmarkers[i].labelClass;
+                var message = gmarkers[i].customInfo[1];
+                var date_visited = gmarkers[i].customInfo[2];
+                var rating = gmarkers[i].customInfo[3];
+                var blurb = gmarkers[i].customInfo[4];
+                var photo = gmarkers[i].customInfo[5];
+                var photo2 = gmarkers[i].customInfo[6];
+                var photo3 = gmarkers[i].customInfo[7];
+
+                addInfoWindow(i, gmarkers[i], message, name, date_visited, rating, icon_color, blurb, photo);
+
+                side_bar_html += '<div class="image" id="hidden_div' + i + '" style="background-color: white; display: block; font-family: Arial, sans-serif;  font-size: 20px; width=100%; ">&nbsp;&nbsp;<a href="javascript:zoomToMap(' + i + ')">' + '<font size="4">' + name + '</a></font><br>';
+
+                contentString = ""
+                if (icon_color == "visited") {
+                    contentString = contentString + '<br><b><font size=3>&nbsp;&nbsp;Date Visited: </b>' + date_visited + '<table><tr valign="center"><td>&nbsp;&nbsp;Rating: <td valign="center">';
+
+                    var whole_number = Math.floor(rating);
+                    for (j = 0; j < whole_number; j++) {
+                        contentString += '<img src="https://pizzawithbeth.yolasite.com/resources/full-star.png" align="top"> ';
+                    }
+                    if (whole_number != rating)
+                        contentString += '<img src="https://pizzawithbeth.yolasite.com/resources/half-star.png" align="top"> ';
+
+                    contentString += '<font></td> </tr></table>';
+                }
+
+                side_bar_html += contentString;
+
+
+                side_bar_html += '<br><font size=2><div>&nbsp;&nbsp;' + message + '</div></font>';
+                if (blurb) {
+                    side_bar_html += '<div id="blurb_id_main' + i + '"; style="line-height: 1.0;"><font style="font-size: 14px;"><br><a href="javascript:hideShowDetails(' + i + ')" style="color:black; text-decoration: none">&nbsp;&nbsp;Show more &#x25BC;</a></font></div>';
+                    side_bar_html += '<div style="display: none; position:relative; left: 10px; width:90%;"  id="blurb_div' + i + '"><font style="font-size: 12px;">' + blurb;
+                    if (photo) {
+                        if (iphone == 0)
+                            side_bar_html += '<br><br><img src="' + photo + '" width="90%" height="30%"><br>';
+                        else
+                            side_bar_html += '<br><img src="' + photo + '" width="90%" height="30%"><br>';
+                    }
+                    if (photo2) {
+                        if (iphone == 0)
+                            side_bar_html += '<br><img src="' + photo2 + '" width="90%" height="30%"><br>';
+                        else
+                            side_bar_html += '<br><img src="' + photo2 + '" width="90%" height="30%"><br>';
+                    }
+                    if (photo3) {
+                        if (iphone == 0)
+                            side_bar_html += '<br><img src="' + photo3 + '" width="90%" height="30%"><br>';
+                        else
+                            side_bar_html += '<br><img src="' + photo3 + '" width="90%" height="30%"><br>';
+                    }
+                    side_bar_html += '</font></div>';
+                }
+                side_bar_html += '<br></p></div><pdiv></pdiv>';
+            }
         }
 
-    }
-    if (iphone == 0) {
-        var w = window,
-            d = document,
-            e = d.documentElement,
-            g = d.getElementsByTagName('body')[0],
-            y = w.innerHeight || e.clientHeight || g.clientHeight;
-    }
-
-
-    if (iphone == 1) {
-        document.getElementById('side_bar').scrollTop = total_height;
-    } else
-        document.getElementById('side_bar').scrollTop = offset;
-
-}
-
-function initMap() {
-
-    DetectIphone();
-
-    if (iphone == 0) {
-        map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
-            center: new google.maps.LatLng(38.923,-77.13),
-            mapTypeId: 'roadmap',
-            streetViewControl: false,
-            mapTypeControl: false
-        });
-    }
-
-    if (iphone == 1) {
-        map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 11,
-            center: new google.maps.LatLng(38.923,-77.05),
-            mapTypeId: 'roadmap',
-            streetViewControl: false,
-            mapTypeControl: false
-        });
-    }
-        
-   
-
-    function addInfoWindow(num, marker, message, name, date_visited, rating, icon_color, blurb, photo) {
-
-        var contentString = '<font size="4">' + name //+ '</font>' + '<br><br>' + message;
-
-        infoWindow = new google.maps.InfoWindow({
-            content: contentString
-        });
-
-
-
-
-        google.maps.event.addListener(marker, 'click', function() {
-
-
-            var lat = marker.getPosition().lat();
-            var lon = marker.getPosition().lng();
-
-            if (iphone == 0)
-                lon = lon - 0.006;
-            if (iphone==0)
-                map.setZoom(16);
-            else
-                map.setZoom(13);
-
-            map.setCenter(new google.maps.LatLng(lat, lon));
-
-            if (infoWindow) {
-                infoWindow.close();
-            }
-
-
+        function addInfoWindow(num, marker, message, name, date_visited, rating, icon_color, blurb, photo) {
+            var contentString = '<font size="4">' + name //+ '</font>' + '<br><br>' + message;
             infoWindow = new google.maps.InfoWindow({
                 content: contentString
             });
+            google.maps.event.addListener(marker, 'click', function() {
+                var lat = marker.getPosition().lat();
+                var lon = marker.getPosition().lng();
+                if (iphone == 0)
+                    lon = lon - 0.006;
+                if (iphone == 0)
+                    map.setZoom(16);
+                else
+                    map.setZoom(13);
+                map.setCenter(new google.maps.LatLng(lat, lon));
 
-            infoWindow.open(map, marker);
-
-            hideDivs(num);
-
-        });
-
-    }
-
-
-
-    function createMarker(num, name, lat, lon, message, icon_color, date_visited, rating, blurb, photo) {
-
-        var oldnum = gmarkers.length;
-        oldnum++;                            
-
-        var markerLabel = '' + oldnum + '';                       
-        var markerColor = "#000000";
-
-        var newmarker = new google.maps.Marker({
-            position: new google.maps.LatLng(lat, lon),
-            labelClass: icon_color,
-            label: {
-                text: markerLabel,
-                color: markerColor,
-                fontSize: "12px",
-                fontWeight: "bold"
-            },
-            map:  map
-        });
-        
-        gmarkers.push(newmarker);
-        var c = gmarkers.length - 1;        
-
-        side_bar_html += '<div class="image" id="hidden_div' + (gmarkers.length) + '" style="background-color: white; display: block; font-family: Arial, sans-serif;  font-size: 20px; width=100%; "><a href="javascript:myclick(' + c + ')">' +  '<font size="4">'+ name + '</a></font><br>';
-
-       // if (blurb)
-       //     side_bar_html += '<div style="line-height: 1.0;"><font style="font-size: 14px;"><br>'  + blurb +'</div>';
-                  
-        contentString = ""
-
-        if (icon_color == "visited")
-        {
-
-            contentString = contentString + '<br><b><font size=3>Date Visited: </b>' + date_visited + '<table><tr valign="center"><td>Rating: <td valign="center">';   
-  
-            var whole_number = Math.floor(rating);
-
-            for (i = 0; i < whole_number; i++) {
-                contentString += '<img src="https://pizzawithbeth.yolasite.com/resources/full-star.png" align="top"> ';
-            }
-
-            if (whole_number != rating)
-                contentString += '<img src="https://pizzawithbeth.yolasite.com/resources/half-star.png" align="top"> ';
-            
-            contentString += '<font></td> </tr></table>';
+                if (infoWindow) {
+                    infoWindow.close();
+                }
+                infoWindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                infoWindow.open(map, marker);
+                scrollToDiv(num);
+            });
         }
 
-  
+        function filterMarkers(index) {
 
-        side_bar_html += contentString;
+            sortMarkers(index);
 
-  /*      if (photo) {
-            if (iphone == 0 )
-                side_bar_html += '<br><img src="' + photo + '" width="425" height="325"><br>';
-            else
-                side_bar_html += '<br><img src="' + photo + '" width="100%" height="33%"><br>';
-        }*/
+            document.getElementById('side_bar').scrollTop = 0;
+            if (infoWindow)
+                infoWindow.close();
+            var option = ""
+            if (index == "3") {
+                navigator.geolocation.getCurrentPosition(
+                    function success(position) {
+                        var userPosLat = position.coords.latitude;
+                        var userPosLon = position.coords.longitude;
+                        map.setZoom(14);
+                        map.setCenter(new google.maps.LatLng(userPosLat, userPosLon));
+                    },
+                    function error(err) {});
+
+            }
+            if (index == "0")
+                option = "missing";
+            if (index == "1")
+                option = "visited";
+            var strMessage1 = document.getElementById("side_bar").childNodes[0];
+            var html = strMessage1.innerHTML;
+            if (index == "2" || index == "3") {
+                if (iphone == 0) {
+                    map.setZoom(11);
+                    map.setCenter(new google.maps.LatLng(38.923, -77.13));
+                }
+                if (iphone == 1) {
+                    map.setZoom(10);
+                    map.setCenter(new google.maps.LatLng(38.923, -77.05));
+                }
+                html = html.replace(/display: none;/g, 'display: block;');
+                strMessage1.innerHTML = html;
+                for (var i = 0; i < gmarkers.length; i++) {
+                    gmarkers[i].setVisible(true);
+
+                }
+            } else {
+                html = html.replace(/display: none;/g, 'display: block;');
+                for (var i = 0; i < gmarkers.length; i++) {
+                    gmarkers[i].setVisible(true);
+                    if (gmarkers[i].labelClass != option) {
+                        gmarkers[i].setVisible(false);
+
+                        var replace_str = '<div class="image" id="hidden_div' + i + '" style="background-color: white; display: block;'
+                        var new_str = '<div class="image" id="hidden_div' + i + '" style="background-color: white; display: none;'
+                        html = html.replace(replace_str, new_str);
+                        strMessage1.innerHTML = html;
+                    }
+                }
+            }
+            for (var i = 0; i < gmarkers.length; i++) {
+                var x = document.getElementById("blurb_div" + i);
+                if (x) {
+                    x.style.display = "none";
+                }
+            }
+
+        }
+
+        function zoomToMap(myLen) {
+            google.maps.event.trigger(gmarkers[myLen], "click");
+            map.setZoom(16);
+        }
+
+        function hideShowDetails(myLen) {
+            var x = document.getElementById("blurb_div" + myLen);
+            var text = document.getElementById("blurb_id_main" + myLen).innerHTML;
+            if (x.style.display === "none") {
+                x.style.display = "block";
+                document.getElementById("blurb_id_main" + myLen).innerHTML = '<font style="font-size: 14px;"><br><a href="javascript:hideShowDetails(' + myLen + ')" style="color:black; text-decoration: none">&nbsp;&nbsp;Show less &#9650;</a></font>';
+            } else {
+                x.style.display = "none";
+                document.getElementById("blurb_id_main" + myLen).innerHTML = '<font style="font-size: 14px;"><br><a href="javascript:hideShowDetails(' + myLen + ')" style="color:black; text-decoration: none">&nbsp;&nbsp;Show more &#x25BC;</a></font>';
+            }
+        }
+
+        function scrollToDiv(y) {
+
+            var offset = document.getElementById("hidden_div" + y).offsetTop;
+            if (iphone == 1) {
+
+                var total_height = 0;
+                for (r = 0; r < y; r++) {
+
+                    total_height += document.getElementById("hidden_div" + r).clientHeight;
+
+                    if (document.getElementById("hidden_div" + r).style.display == "block") {
+                        total_height += 10;
+                    }
+                }
+            }
+            if (iphone == 0) {
+                var w = window,
+                    d = document,
+                    e = d.documentElement,
+                    g = d.getElementsByTagName('body')[0],
+                    y = w.innerHeight || e.clientHeight || g.clientHeight;
+            }
+            if (iphone == 1) {
+                document.getElementById('side_bar').scrollTop = total_height;
+            } else
+                document.getElementById('side_bar').scrollTop = offset;
+        }
+
+        function initMap() {
+            DetectIphone();
+
+            if (iphone == 0) {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 12,
+                    center: new google.maps.LatLng(38.923, -77.13),
+                    mapTypeId: 'roadmap',
+                    streetViewControl: false,
+                    mapTypeControl: false
+                });
+            }
+            if (iphone == 1) {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 11,
+                    center: new google.maps.LatLng(38.923, -77.05),
+                    mapTypeId: 'roadmap',
+                    streetViewControl: false,
+                    mapTypeControl: false,
+                    zoomControl: false
+
+                });
 
 
-        side_bar_html += '<br><font size=2><div>' +   message + '</div></font>';
+                navigator.geolocation.getCurrentPosition(
+                    function success(position) {
+                        var im = 'https://www.robotwoods.com/dev/misc/bluecircle.png';
+                        var userPosLat = position.coords.latitude;
+                        var userPosLon = position.coords.longitude;
+                        //map.setCenter(new google.maps.LatLng(userPosLat, userPosLon));
+                        //map.setZoom(14);
+                        var newmarker = new google.maps.Marker({
+                            position: new google.maps.LatLng(userPosLat, userPosLon),
+                            icon: im,
+                            map: map
+                        });
+                    },
+                    function error(err) {});
+
+            }
 
 
-        side_bar_html += '<br></p></div><pdiv></pdiv>';
+
+            function createMarker(name, lat, lon, street_address, url1, url2, icon_color, date_visited, rating, blurb, photo, photo2, photo3) {
+                var message = street_address + '<br>&nbsp;&nbsp;<a href="' + url1 + '"target="_blank">' + url2 + '</a>'
+
+                var oldnum = gmarkers.length;
+                oldnum++;
+                var markerLabel = '' + oldnum + '';
+                var markerColor = "#000000";
+                var data = [name, message, date_visited, rating, blurb, photo, photo2, photo3];
+                var newmarker = new google.maps.Marker({
+                    position: new google.maps.LatLng(lat, lon),
+                    labelClass: icon_color,
+                    customInfo: data,
+                    label: {
+                        text: markerLabel,
+                        color: markerColor,
+                        fontSize: "12px",
+                        fontWeight: "bold"
+                    },
+                    map: map
+                });
+
+                gmarkers.push(newmarker);
 
 
-        addInfoWindow(c, gmarkers[(gmarkers.length - 1)], message, name, date_visited, rating, icon_color, blurb, photo);
+            }
 
-    }
+            createMarker('2 Amys', 38.9337, -77.07307, '3715 Macomb St NW, Washington, DC 20016', "https://www.2amysdc.com", "2amysdc.com", 'visited', 'July 27, 2010', '5', 'Definitely one of the best pizza places in DC.  I went to 2 Amys with my friend Becca.  This was one of the first places we visited on the DC Pizza List.  The crust is definitely the highlight.');
+            createMarker('&pizza', 38.91686, -77.02925, '1250 U St NW, Washington, DC 20009', "https://www.andpizza.com", "andpizza.com", 'visited', ' August 10, 2013 ', '4', "Pretty good pizza! Didn't have to wait long and lots of topping options.  I normally don't like pizza that isn't circular, but this shape worked for me", 'https://pizzawithbeth.yolasite.com/resources/andpizza.jpg');
+            createMarker("Alberto's Pizza", 38.90943, -77.04539, '2010 P St NW, Washington, DC 20036', "https://www.albertospizzapst.com", "albertospizzapst.com", 'visited', 'October 20, 2010', '5', "Quintessential late-night slice. I don't think I've ever been here earlier than 1am", 'https://pizzawithbeth.yolasite.com/resources/albertos.jpg');
+            createMarker('All-Purpose', 38.90698, -77.02422, '1250 9th St NW, Washington, DC 20001', "https://www.allpurposedc.com", "allpurposedc.com", 'visited', 'August 30, 2016 ', '4', "This didn't even exist when I was living in DC. I came on a visit to DC, years later. Good pizza, great crust");
+            createMarker('Comet Ping Pong', 38.95594, -77.06996, '5037 Connecticut Ave NW, Washington DC 20008', "https://www.cometpingpong.com", "cometpingpong.com", 'visited', 'October 10, 2014', '4.5', 'I visited two weeks before I moved from DC, in a last-minute attempt to finish the DC Pizza List. I went to Comet Ping Pong with a group of friends. Any restaurant that has ping-pong and pizza, is a great restaurant. ');
+            createMarker('DC Slices', 38.90192, -77.04452, '1990 K St NW, Washington, DC 20006', "https://www.pizzaslicesdc.com", "www.pizzaslicesdc.com", 'visited', ' April 17, 2010 ', '4', "Food truck. I took a Friday off to find this truck. Typical food truck pizza. A little greasy, but hot (temperature)");
+            createMarker("Ella's Wood Fired Pizza", 38.89782, -77.02426, '610 9th Street NW, Washington, DC 20004', "https://www.ellaspizza.com", "www.ellaspizza.com", 'visited', 'June 5, 2010 ', '4', "One of my favorites in DC. I've been over 12 times. Good crust and good, simple toppings.", 'https://pizzawithbeth.yolasite.com/resources/ellas.jpg');
+            createMarker('Etto', 38.91096, -77.03161, '1541 14th St NW, Washington, DC 20005', "https://www.ettodc.com", "ettodc.com", 'visited', ' July 20, 2013 ', '4', '', 'https://pizzawithbeth.yolasite.com/resources/etto.jpg');
+            createMarker('Fuel Pizza & Wings', 38.89707, -77.02013, '600 F St NW, Washington, DC 20004', "https://www.fuelpizza.com", "fuelpizza.com", 'visited', ' June 29, 2012 ', '4', ' ', 'https://pizzawithbeth.yolasite.com/resources/fuelpizza6.jpg');
+            createMarker('Fire Works Pizza', 38.88987, -77.08729, '2350 Clarendon Blvd, Arlington, VA 22201', "https://www.fireworkspizza.com", "fireworkspizza.com", 'visited', ' September 8, 2012 ', '2');
+            createMarker('Fuel Pizza & Wings', 38.90226, -77.03711, '1606 K St NW, Washington, DC 20006', "https://www.fuelpizza.com", "fuelpizza.com", 'visited', ' January 21, 2012 ', '5', ' ', 'https://pizzawithbeth.yolasite.com/resources/fuelpizzaf.jpg');
+            createMarker('Ghibellina', 38.91156, -77.03215, '1610 14th St NW, Washington, DC 20009', "https://www.ghibellina.com", "www.ghibellina.com", 'visited', ' May 16, 2013 ', '3');
+            createMarker('Graffiato', 38.89867, -77.01958, '707 6th St NW, Washington, DC 20001', "https://www.graffiatodc.com", "graffiatodc.com", 'visited', 'September 30, 2011', '4', 'We tried for a long time to get a reservation here. Overall went at least three times. Excellent restaurant overall. They serve alot more than pizza. Pizza has very thin crust, which I like.creative pizza toppings and combinations.', 'https://pizzawithbeth.yolasite.com/resources/graffiato.png');
+            createMarker('Italian Kitchen on U', 38.91681, -77.02768, '1110 U St NW, Washington, DC 20009', "https://www.italianonu.com", "https://www.italianonu.com", 'missing', 'x', 'x', "I've never been here, although some people claim I have. It would have been very late at night and I have no memory");
+            createMarker('The Italian Store', 38.8967, -77.09639, '3123 Lee Hwy, Arlington, VA 22201', "https://www.italianstore.com", "www.italianstore.com", 'visited', ' April 11, 2013 ', '4', '', 'https://pizzawithbeth.yolasite.com/resources/italianstore.jpg');
+            createMarker("Kavanagh's Pizza Pub", 38.92116, -77.0725, '2400 Wisconsin Ave NW, Washington, DC 20007', 'visited', ' February 3, 2010', 'unknown');
+            createMarker("Lia's", 38.962, -77.08727, '4435 Willard Ave, Chevy Chase, MD 20815', "https://www.chefgeoff.com", "www.chefgeoff.com", 'visited', ' July 21, 2010', '3.5');
+            createMarker('Lost Dog Cafe', 38.86227, -77.08759, '2920 Columbia Pike, Arlington, VA 22204', "https://www.lostdogcafe.site", "lostdogcafe.site", 'visited', 'August 29, 2016', '4', 'I visited here with Matt and Helah when I came back to DC to speak at a conference. The toppings on the pizza were in excellent proportion', 'https://pizzawithbeth.yolasite.com/resources/lostdog.jpg');
+            createMarker('Menomale', 38.92484, -76.99022, '2711 12th St NE, Washington, DC 20018', "https://www.menomale.us", "menomale.us", 'visited', ' October 11, 2014 ', '4.5', 'I visited two weeks before I moved from DC, in a last-minute attempt to finish the DC Pizza List. I went to Menomale with my parents. We had an excellent time! The pizza was great. We split two pizzas between the 3 of us', 'https://pizzawithbeth.yolasite.com/resources/menomale.jpg');
+            createMarker('Matchbox', 38.90007, -77.02241, '713 H St NW, Washington, DC 20001', "https://www.matchboxrestaurants.com", "www.matchboxrestaurants.com", 'visited', 'May 31, 2010 ', '4.5');
+            createMarker('Matchbox', 38.89867, -77.01958, '1901 14th St NW, Washington, DC 20009', "https://www.matchboxrestaurants.com", "www.matchboxrestaurants.com", 'visited', ' December 29, 2012 ', '4', ' ', 'https://pizzawithbeth.yolasite.com/resources/matchbox14.jpg');
+            createMarker("Pete's New Haven Style Apizza", 38.95448, -77.08295, '4940 Wisconsin Ave, Washington, DC 20016', "https://www.petesapizza.com", "petesapizza.com", 'visited', ' November 28, 2010', '4.5');
+            createMarker('Piola - DC', 38.91954, -77.03218, '2208 14th St NW, Washington, DC 20009', "https://www.piola.it", "www.piola.it", 'missing', 'unknown', 'unknown');
+            createMarker('Piola - Arlington', 38.93055, -77.03766, '1550 Wilson Blvd, Arlington, VA 22209', "https://www.piola.it", "www.piola.it", 'visited', ' November 9, 2013 ', '3.5');
+            createMarker('Pi Pizzeria', 38.89712, -77.02474, '910 F St NW, Washington, DC 20004', "https://www.pi-pizza.com", "pi-pizza.com", 'visited', ' May 4, 2012 ', '5', ' ', 'https://pizzawithbeth.yolasite.com/resources/pipizzeria.jpg');
+            createMarker('Pizza No. 17', 38.91058, -77.03817, '1523 17th St NW, Washington, DC 20036', 'visited', ' March 22, 2011', '4', 'No longer exists', 'https://pizzawithbeth.yolasite.com/resources/no17pizza.jpg');
+            createMarker('Pizzeria Paradiso - Georgetown', 38.90489, -77.06561, '3282 M St NW, Washington, DC 20007', "https://www.eatyourpizza.com", "www.eatyourpizza.com", 'missing');
+            createMarker('Pizzeria Paradiso - P St', 38.90977, -77.04521, '2003 P St NW, Washington, DC 20036', "https://www.eatyourpizza.com", "www.eatyourpizza.com", 'visited', ' May 8, 2010 ', '4.5');
+            createMarker('Pupatella', 38.8776, -77.12221, '5104 Wilson Blvd, Arlington, VA 22205', "https://www.pupatella.com", "www.pupatella.com", 'visited', ' May 25, 2016 ', '3');
+            createMarker('Radius Pizza', 38.93055, -77.03766, '3155 Mt Pleasant St NW, Washington, DC 20010', "https://www.graffiatodc.com", "graffiatodc.com", 'visited', ' December 22, 2013 ', '5', ' ', 'https://pizzawithbeth.yolasite.com/resources/radius.jpg');
+            createMarker('RedRocks Columbia Heights', 38.93168, -77.02801, '1036 Park Rd NW, Washington, DC 20010', "https://www.redrockscolheights.com", "www.redrockscolheights.com", 'visited', ' May 26, 2012 ', '3.5');
+            createMarker('Rustico Restaurant & Bar ', 38.88022, -77.10843, '4075 Wilson Blvd, Arlington, VA 22203', "https://www.rusticorestaurant.com", "www.rusticorestaurant.com", 'visited', ' October 2, 2013 ', '3.5');
+            createMarker('Seventh Hill Pizza', 38.88531, -76.99639, '327 7th St SE, Washington, DC 20003', "https://www.7hpizzaeasternmarket.com", "7hpizzaeasternmarket.com", 'visited', ' June 9, 2013 ', '4.5', ' ', 'https://pizzawithbeth.yolasite.com/resources/seventhhill.jpg');
+            createMarker("Timber Pizza Company", 38.94204, -77.02382, '809 Upshur St NW, Washington, DC 20011', 'missing');
+            createMarker('Vace Italian Delicatessen', 38.93401, -77.05715, '3315 Connecticut Ave NW, Washington, DC 20008', "https://www.vaceitaliandeli.com", "www.vaceitaliandeli.com", 'visited', ' July 6, 2013 ', '4', ' ', 'https://pizzawithbeth.yolasite.com/resources/vace.jpg');
+            createMarker('Vapiano', 38.90535, -77.04193, '1800 M St NW, Washington, DC 20036', "https://www.vapiano.us", "www.vapiano.us", 'visited', 'June 14, 2010', '5');
+            createMarker('Vapiano', 38.90014, -77.02106, '625 H St NW, Washington, DC 20001', "https://www.vapiano.com", "us.vapiano.com", 'visited', ' April 2, 2011 ', '5');
+            createMarker('We, The Pizza', 38.8866, -77.00171, '305 Pennsylvania Ave SE, Washington, DC 20003', "https://www.wethepizza.com", "wethepizza.com", 'visited', ' March 13, 2015 ', '4', 'My friend Becca and I came here to carbo-load before the DC Rock n Roll half marathon. We got slices.', 'https://pizzawithbeth.yolasite.com/resources/wethepizza.jpg');
+            createMarker('Wiseguy Pizza', 38.89962, -77.01598, '300 Massachusetts Ave NW #1, Washington, DC 20001', "https://www.wiseguynypizza.com", "www.wiseguynypizza.com", 'visited', ' December 9, 2012 ', '4', ' ', 'https://pizzawithbeth.yolasite.com/resources/wiseguy.jpg');
 
-            // Create markers.        
+            sortMarkers(0);
 
-            createMarker('0', '2 Amys', 38.9337, -77.07307, '3715 Macomb St NW<br>Washington, DC 20016<br><a href="http://www.2amysdc.com">2amysdc.com</a>', 'visited', 'July 27, 2010', '5', 'Definitely one of the best pizza places in DC.  I went to 2 Amys with my friend Becca.  This was one of the first places we visited on the DC Pizza List.  The crust is definitely the highlight.');
-            createMarker('1', '&pizza', 38.91686, -77.02925, '1250 U St NW<br>Washington, DC 20009<br><a href="http://www.andpizza.com">andpizza.com</a>', 'visited', ' August 10, 2013 ', '4', "Pretty good pizza! Didn't have to wait long and lots of topping options.  I normally don't like pizza that isn't circular, but this shape worked for me", 'https://pizzawithbeth.yolasite.com/resources/andpizza.jpg');
-            createMarker('2', "Alberto's Pizza", 38.90943, -77.04539, '2010 P St NW<br>Washington, DC 20036<br><a href="http://www.albertospizzapst.com">albertospizzapst.com</a>', 'visited', 'October 20, 2010', '5', "Quintessential late-night slice.  I don't think I've ever been here earlier than 1am", 'https://pizzawithbeth.yolasite.com/resources/albertos.jpg');
-            createMarker('3', 'All-Purpose', 38.90698, -77.02422, '1250 9th St NW<br>Washington, DC 20001<br><a href="http://www.allpurposedc.com">allpurposedc.com</a>', 'visited', 'August 30, 2016 ', '4',"This didn't even exist when I was living in DC.  I came on a visit to DC, years later.  Good pizza, great crust");
-            createMarker('4', 'Comet Ping Pong', 38.95594, -77.06996, '5037 Connecticut Ave NW<br>Washington DC 20008<br><a href="http://www.cometpingpong.com">cometpingpong.com</a>', 'visited', 'October 10, 2014', '4.5', 'I visited two weeks before I moved from DC, in a last-minute attempt to finish the DC Pizza List.  I went to Comet Ping Pong with a group of friends.  Any restaurant that has ping-pong and pizza, is a great restaurant. ');
-            createMarker('5', 'DC Slices', 38.90192, -77.04452, '1990 K St NW<br>Washington, DC 20006<br><a href="http://www.pizzaslicesdc.com">www.pizzaslicesdc.com</a>', 'visited', ' April 17, 2010 ', '4',"Food truck.  I took a Friday off to find this truck.  Typical food truck pizza.  A little greasy, but hot (temperature)");
-            createMarker('6', "Ella's Wood Fired Pizza", 38.89782, -77.02426, '610 9th Street NW<br>Washington, DC 20004<br><a href="http://www.ellaspizza.com">www.ellaspizza.com</a>', 'visited', 'June 5, 2010 ', '4', "One of my favorites in DC.  I've been over 12 times.  Good crust and good, simple toppings.", 'https://pizzawithbeth.yolasite.com/resources/ellas.jpg');
-            createMarker('7', 'Etto', 38.91096, -77.03161, '1541 14th St NW<br>Washington, DC 20005<br><a href="http://www.ettodc.com">ettodc.com</a>', 'visited', ' July 20, 2013 ', '4', '', 'https://pizzawithbeth.yolasite.com/resources/etto.jpg');
-            createMarker('8', 'Fuel Pizza & Wings', 38.89707, -77.02013, '600 F St NW, Washington, DC 20004<br><a href="http://www.fuelpizza.com">fuelpizza.com</a>', 'visited', ' June 29, 2012 ', '4', ' ', 'https://pizzawithbeth.yolasite.com/resources/fuelpizza6.jpg');
-            createMarker('9', 'Fire Works Pizza', 38.88987, -77.08729, '2350 Clarendon Blvd, Arlington, VA 22201<br><a href="http://www.fireworkspizza.com">fireworkspizza.com</a>', 'visited', ' September 8, 2012 ', '2');
-            createMarker('10', 'Fuel Pizza & Wings', 38.90226, -77.03711, '1606 K St NW, Washington, DC 20006<br><a href="http://www.fuelpizza.com">fuelpizza.com</a>', 'visited', ' January 21, 2012 ', '5', '  ', 'https://pizzawithbeth.yolasite.com/resources/fuelpizzaf.jpg');
-            createMarker('11', 'Ghibellina', 38.91156, -77.03215, '1610 14th St NW, Washington, DC 20009<br><a href="http://www.ghibellina.com">www.ghibellina.com</a>', 'visited', ' May 16, 2013 ', '3');
-            createMarker('12', 'Graffiato', 38.89867, -77.01958, '707 6th St NW, Washington, DC 20001<br><a href="http://www.graffiatodc.com">graffiatodc.com</a>', 'visited', 'September 30, 2011', '4', 'We tried for a long time to get a reservation here.  Overall went at least three times.  Excellent restaurant overall.  They serve alot more than pizza.  Pizza has very thin crust, which I like.  Creative pizza toppings and combinations.', 'https://pizzawithbeth.yolasite.com/resources/graffiato.png');
-            createMarker('13', 'Italian Kitchen on U', 38.91681, -77.02768, '1110 U St NW, Washington, DC 20009<br><a href="http://www.italianonu.com">http://www.italianonu.com</a>', 'missing', 'x', 'x', "I've never been here, although some people claim I have.  It would have been very late at night and I have no memory");
-            createMarker('14', 'The Italian Store', 38.8967, -77.09639, '3123 Lee Hwy, Arlington, VA 22201<br><a href="http://www.italianstore.com">www.italianstore.com</a>', 'visited', ' April 11, 2013 ', '4', '', 'https://pizzawithbeth.yolasite.com/resources/italianstore.jpg');
-            createMarker('15', "Kavanagh's Pizza Pub", 38.92116, -77.0725, '2400 Wisconsin Ave NW, Washington, DC 20007', 'visited', ' February 3, 2010', 'unknown');
-            createMarker('16', "Lia's", 38.962, -77.08727, '4435 Willard Ave, Chevy Chase, MD 20815<br><a href="http://www.chefgeoff.com">www.chefgeoff.com</a>', 'visited', ' July 21, 2010', '3.5');
-            createMarker('17', 'Lost Dog Cafe', 38.86227, -77.08759, '2920 Columbia Pike, Arlington, VA 22204<br><a href="http://www.lostdogcafe.site">lostdogcafe.site</a>', 'visited', 'August 29, 2016', '4', 'I visited here with Matt and Helah when I came back to DC to speak at a conference.  The toppings on the pizza were in excellent proportion', 'https://pizzawithbeth.yolasite.com/resources/lostdog.jpg');
-            createMarker('18', 'Menomale', 38.92484, -76.99022, '2711 12th St NE, Washington, DC 20018<br><a href="http://www.menomale.us">menomale.us</a>', 'visited', ' October 11, 2014 ', '4.5', 'I visited two weeks before I moved from DC, in a last-minute attempt to finish the DC Pizza List.  I went to Menomale with my parents.  We had an excellent time!  The pizza was great.  We split two pizzas between the 3 of us', 'https://pizzawithbeth.yolasite.com/resources/menomale.jpg');
-            createMarker('19', 'Matchbox', 38.90007, -77.02241, '713 H St NW, Washington, DC 20001<br><a href="http://www.matchboxrestaurants.com">www.matchboxrestaurants.com</a>', 'visited', 'May 31, 2010 ', '4.5');
-            createMarker('20', 'Matchbox', 38.89867, -77.01958, '1901 14th St NW, Washington, DC 20009<br><a href="http://www.matchboxrestaurants.com">www.matchboxrestaurants.com</a>', 'visited', ' December 29, 2012  ', '4', ' ', 'https://pizzawithbeth.yolasite.com/resources/matchbox14.jpg');
-            createMarker('21', "Pete's New Haven Style Apizza", 38.95448, -77.08295, '4940 Wisconsin Ave, Washington, DC 20016<br><a href="http://www.petesapizza.com">petesapizza.com</a>', 'visited', ' November 28, 2010', '4.5');
-            createMarker('22', 'Piola - DC', 38.91954, -77.03218, '2208 14th St NW, Washington, DC 20009<br><a href="http://www.piola.it">www.piola.it</a>', 'missing', 'unknown', 'unknown');
-            createMarker('23', 'Piola - Arlington', 38.93055, -77.03766, '1550 Wilson Blvd, Arlington, VA 22209<br><a href="http://www.piola.it">www.piola.it</a>', 'visited', ' November 9, 2013 ', '3.5');
-            createMarker('24', 'Pi Pizzeria', 38.89712, -77.02474, '910 F St NW, Washington, DC 20004<br><a href="http://www.pi-pizza.com">pi-pizza.com</a>', 'visited', ' May 4, 2012 ', '5', ' ', 'https://pizzawithbeth.yolasite.com/resources/pipizzeria.jpg');
-            createMarker('25', 'Pizza No. 17', 38.91058, -77.03817, '1523 17th St NW, Washington, DC 20036', 'visited', ' March 22, 2011', '4', 'No longer exists', 'https://pizzawithbeth.yolasite.com/resources/no17pizza.jpg');
-            createMarker('26', 'Pizzeria Paradiso - Georgetown', 38.90489, -77.06561, '3282 M St NW, Washington, DC 20007<br><a href="http://www.eatyourpizza.com">www.eatyourpizza.com</a>', 'missing');
-            createMarker('27', 'Pizzeria Paradiso - P St', 38.90977, -77.04521, '2003 P St NW, Washington, DC 20036<br><a href="http://www.eatyourpizza.com">www.eatyourpizza.com</a>', 'visited', ' May 8, 2010 ', '4.5');
-            createMarker('28', 'Pupatella', 38.8776, -77.12221, '5104 Wilson Blvd, Arlington, VA 22205<br><a href="http://www.pupatella.com">www.pupatella.com</a>', 'visited', ' May 25, 2016 ', '3');
-            createMarker('29', 'Radius Pizza', 38.93055, -77.03766, '3155 Mt Pleasant St NW, Washington, DC 20010<br><a href="http://www.graffiatodc.com">graffiatodc.com</a>', 'visited', ' December 22, 2013 ', '5', ' ', 'https://pizzawithbeth.yolasite.com/resources/radius.jpg');
-            createMarker('30', 'RedRocks Columbia Heights', 38.93168, -77.02801, '1036 Park Rd NW, Washington, DC 20010<br><a href="http://www.redrockscolheights.com">www.redrockscolheights.com</a>', 'visited', ' May 26, 2012  ', '3.5');
-            createMarker('31', 'Rustico Restaurant & Bar ', 38.88022, -77.10843, '4075 Wilson Blvd, Arlington, VA 22203<br><a href="http://www.rusticorestaurant.com">www.rusticorestaurant.com</a>', 'visited', ' October 2, 2013 ', '3.5');
-            createMarker('32', 'Seventh Hill Pizza', 38.88531, -76.99639, '327 7th St SE, Washington, DC 20003<br><a href="http://www.7hpizzaeasternmarket.com">7hpizzaeasternmarket.com</a>', 'visited', ' June 9, 2013 ', '4.5', '  ', 'https://pizzawithbeth.yolasite.com/resources/seventhhill.jpg');
-            createMarker('33', "Timber Pizza Company", 38.94204, -77.02382, '809 Upshur St NW, Washington, DC 20011', 'missing');
-            createMarker('34', 'Vace Italian Delicatessen', 38.93401, -77.05715, '3315 Connecticut Ave NW, Washington, DC 20008<br><a href="http://www.vaceitaliandeli.com">www.vaceitaliandeli.com</a>', 'visited', ' July 6, 2013 ', '4', ' ', 'https://pizzawithbeth.yolasite.com/resources/vace.jpg');
-            createMarker('35', 'Vapiano', 38.90535, -77.04193, '1800 M St NW, Washington, DC 20036<br><a href="http://www.vapiano.us">www.vapiano.us</a>', 'visited', 'June 14, 2010', '5');
-            createMarker('36', 'Vapiano', 38.90014, -77.02106, '625 H St NW, Washington, DC 20001<br><a href="http://.vapiano.com">us.vapiano.com</a>', 'visited', ' April 2, 2011 ', '5');
-            createMarker('37', 'We, The Pizza', 38.8866, -77.00171, '305 Pennsylvania Ave SE, Washington, DC 20003<br><a href="http://www.wethepizza.com">wethepizza.com</a>', 'visited', ' March 13, 2015 ', '4', 'My friend Becca and I came here to carbo-load before the DC Rock n Roll half marathon.  We got slices.', 'https://pizzawithbeth.yolasite.com/resources/wethepizza.jpg');
-            createMarker('38', 'Wiseguy Pizza', 38.89962, -77.01598, '300 Massachusetts Ave NW #1, Washington, DC 20001<br><a href="http://www.wiseguynypizza.com">www.wiseguynypizza.com</a>', 'visited', ' December 9, 2012  ', '4', '  ', 'https://pizzawithbeth.yolasite.com/resources/wiseguy.jpg');     
-         
-    legend_txt='<font size=3><a href="javascript:hidemarkers(0)">Missing</a><br><a href="javascript:hidemarkers(1)">Visited</a><br><a href="javascript:hidemarkers(2)">Show All</a></font size>';
 
-   
-    var div1 = document.createElement('div1');
-    div1.innerHTML = legend_txt;
-    document.getElementById('legend').appendChild(div1);
 
-    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById('legend'));
+            legend_txt = '<font size=3><a href="javascript:filterMarkers(0)">Missing</a><br><a href="javascript:filterMarkers(1)">Visited</a><br><a href="javascript:filterMarkers(3)">Nearby</a><br><a href="javascript:filterMarkers(2)">Show All</a></font size>';
 
-    side_bar_html += '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
-    side_bar_html += '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
 
-    side_bar_html = '<div id="sub_side_bar" > ' + side_bar_html + '</div>';
-    
-    var div2 = document.createElement('div2');
-    div2.innerHTML = side_bar_html;
-    document.getElementById('side_bar').appendChild(div2);
+            var div1 = document.createElement('div1');
+            div1.innerHTML = legend_txt;
+            document.getElementById('legend').appendChild(div1);
 
-    if (iphone == 0) {
-        document.getElementById('side_bar').style.height = '100%';
-        document.getElementById('side_bar').style.width = '500px';
-                
-        map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('side_bar'));
-        document.getElementById('map').style.height = '90%';
-    }
+            map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById('legend'));
 
-    if (iphone ==1) {
-        document.getElementById('page_title').style.fontSize='20px';
-        document.getElementById('home_pic').style.height='7%';
-        document.getElementById('home_pic').style.width='7%';
-        document.getElementById('map').style.height = '45%';
-               
-        document.getElementById('side_bar').style.width = '100%';
-        document.getElementById('side_bar').style.height = '500px';
-    }
-  
-}
+            side_bar_html += '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
+            side_bar_html += '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
 
-   
-</script> 
-<script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDILriXJI9GBifa2hlHvtz3fd7LpsHcv_w&amp;callback=initMap"></script>
-</span></body>
+            side_bar_html = '<div id="sub_side_bar"> ' + side_bar_html + '</div>';
+
+            var div2 = document.createElement('div2');
+            div2.innerHTML = side_bar_html;
+
+            document.getElementById('side_bar').appendChild(div2);
+
+            if (iphone == 0) {
+                document.getElementById('side_bar').style.height = '100%';
+                document.getElementById('side_bar').style.width = '400px';
+
+                map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('side_bar'));
+                document.getElementById('map').style.height = '90%';
+            }
+
+            if (iphone == 1) {
+                document.getElementById('page_title').style.fontSize = '20px';
+                document.getElementById('home_pic').style.height = '7%';
+                document.getElementById('home_pic').style.width = '7%';
+                document.getElementById('map').style.height = '45%';
+
+                document.getElementById('side_bar').style.width = '100%';
+                document.getElementById('side_bar').style.height = '500px';
+
+
+            }
+        }
+    </script>
+    <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDILriXJI9GBifa2hlHvtz3fd7LpsHcv_w&amp;callback=initMap">
+    </script>
+</body>
+
 </html>
